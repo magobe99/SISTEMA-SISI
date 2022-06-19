@@ -150,7 +150,7 @@ public class ComprarController {
 			 redirectAttrs
 		             .addFlashAttribute("mensaje", "El producto con el código " + producto.getCodMateriaPrima() + " no existe")
 		             .addFlashAttribute("clase", "warning");
-			 	return "redirect:/comprar";
+			 	return "redirect:/comprar/";
 		}
 
 		boolean encontrado = false;
