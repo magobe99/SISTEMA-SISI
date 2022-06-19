@@ -56,7 +56,7 @@ public class VenderController {
 			this.guardarCarrito(carrito, request);
 			
 		}
-		return "redirect:/vender";
+		return "redirect:/vender/";
 	}
 	
 	private void limpiarCarrito(HttpServletRequest request) {
@@ -69,7 +69,7 @@ public class VenderController {
 		redirectAttrs
 				.addFlashAttribute("mensaje", "Venta cancelada")
 		        .addFlashAttribute("clase", "danger");
-		return "redirect:/vender";
+		return "redirect:/vender/";
 		
 	}
 	
@@ -101,7 +101,7 @@ public class VenderController {
 		ArrayList<ProductoParaVender> carrito = this.obtenerCarrito(request);
 		// Si no hay carrito o esta vacio, regresamos inmediatamente
 		if (carrito == null || carrito.size() <= 0) {
-			return "redirect:/vender";
+			return "redirect:/vender/";
 		}
 		
 		ventasRepository.save(venta);
@@ -126,7 +126,7 @@ public class VenderController {
 		redirectAttrs
 		        .addFlashAttribute("mensaje", "Venta realizada correctamente")
 		        .addFlashAttribute("clase", "success");
-		return "redirect:/vender";
+		return "redirect:/vender/";
 	}
 	
 	
@@ -153,13 +153,13 @@ public class VenderController {
 			 redirectAttrs
 		             .addFlashAttribute("mensaje", "El producto con el código " + producto.getCodProduct() + " no existe")
 		             .addFlashAttribute("clase", "warning");
-			 	return "redirect:/vender";
+			 	return "redirect:/vender/";
 		}
 		if (productoBuscadoPorCodigo.sinExistencia()) {
 			redirectAttrs
 		            .addFlashAttribute("mensaje", "El producto está agotado")
 		            .addFlashAttribute("clase", "danger");
-				return "redirect:/vender";
+				return "redirect:/vender/";
 		}
 		
 		
@@ -170,7 +170,7 @@ public class VenderController {
 					redirectAttrs
 				            .addFlashAttribute("mensaje", "Stock limite del producto alcanzados")
 				            .addFlashAttribute("clase", "danger");
-						return "redirect:/vender";
+						return "redirect:/vender/";
 				}
 				
 				productoParaVenderActual.aumentarCantidad();
@@ -185,7 +185,7 @@ public class VenderController {
 			
 		}
 		this.guardarCarrito(carrito, request);
-        return "redirect:/vender";
+        return "redirect:/vender/";
 	 }
 	 
 
