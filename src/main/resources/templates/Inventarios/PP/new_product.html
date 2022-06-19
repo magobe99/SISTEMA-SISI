@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto Procesado | SISI</title>
+<link rel="icon" href="../../img/ISOTIPO.png">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../css/admin1estilos.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side" th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br>
+				<br>
+				<br>
+				<div class="d-flex bd-highlight mt-5">
+
+					<div class="p-2 w-100 bd-highlight title">
+						<h2 style="font-size: 42px;">NUEVO PRODUCTO</h2>
+						<h5 style="font-size: 32px; color: rgba(230, 149, 28, 0.733);">
+							PRODUCTOS PROCESADOS</h5>
+							
+							<p class="d-flex justify-content-between">
+							
+							<a class="btn btn-success mb-2" th:href="@{/productosPRO}">Ver productos</a>
+				
+								<a href="#ident" class="btn "
+									style="border-radius: 40px; background-color: #ffdf7b;"
+									data-toggle="collapse"><i class="fas fa-question-circle"
+									style="color: black;"></i><b style="color: black;"></b></a>
+							</p>
+
+						<div id="ident" class="collapse">
+							<p class="alert  text-censtart-3  mt-0"
+								style="color: black; background-color: #ffdf7b; opacity: 90%;">
+								En el módulo PRODUCTOS podrá agregar nuevos productos al
+								sistema, actualizar datos de los productos, eliminar o
+								actualizar los productos, imprimir códigos de barra o SKU de
+								cada producto, buscar productos en el sistema, ver todos los
+								productos en almacén, ver los productos más vendidos y filtrar
+								productos por categoría.</p>
+						</div>
+
+					</div>
+				
+							
+					
+				</div>
+				<!-- HASTA ACA OPCIONES-->
+				<!-- DESDE ACA EL FORMULARIO -->
+
+				<div class="row">
+			
+						
+					<div class="col-lg-12 ">
+						<div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+							th:if="${mensaje != null}" th:text="${mensaje}"
+							class="alert text-center"></div>
+							
+							
+						<div class="card shadow-lg p-0 mb-5 bg-white">
+							<div class="card-header bg-primary text-center mb-3"
+								style="font-size: 25px;">
+								<i class="fas fa-barcode"></i> Código y Datos
+							</div>
+							<div class="card-body">
+
+								<form th:action="@{/productosPRO/guardar}"
+									th:object="${producto}" method="post" id="formulario1"
+									class="needs-validation form-sigin" novalidate
+									onsubmit="return ValidarProduct()"
+									enctype="multipart/form-data">
+									<input type="text" th:field="*{IdProduct}" hidden="true" />
+									<div class="form-frow row">
+										<div class="col-md-6 mb-4 mt-2">
+											<label for="validationCustom04" class="form-label">Codigo de barras: </label> 
+											<input th:if="${producto.codProduct == null}" type="number" th:field="*{codProduct}" min="0" class="form-control" name="codP" id="codigoB" required placeholder="Ej: 100004017"> 
+											<input th:unless="${producto.codProduct == null}" type="number" th:field="*{codProduct}" class="form-control" name="codP" id="codigoB" readonly="readonly">
+											<div class="valid-feedback">Ingreso de datos correcto</div>
+											<div class="invalid-feedback">campo requerido</div>
+										</div>
+										<div class="col-md-6 mb-4 mt-2">
+											<label for="validationCustom04" class="form-label">Nombre producto: </label> 
+											<input type="text" th:field="*{nom_Product}" class="form-control" name="nomPROP" id="nombreP" required placeholder="Ej: MEGA GUMS">
+											<div class="valid-feedback">Ingreso de datos correcto</div>
+											<div class="invalid-feedback">campo requerido</div>
+										</div>
+									</div>
+									<div class="card-header bg-primary text-center mt-4 mb-5"
+										style="font-size: 25px;">
+										<i class="fas fa-box"></i> Información del producto
+									</div>
+									<div class="form-frow row">
+										<div class="col-md-6 mb-4">
+											<label for="validationCustom04" class="form-label">
+												Categoria: </label>
+											<div class="input-group">
+												<select th:field="*{id_ProductePRO}" name="cateP"
+													id="categoriaP" class="form-select" required>
+													<th:block th:each="id_ProductePRO: ${listaCategorias}">
+														<option th:text="${id_ProductePRO.nombreCategoria}"
+															th:value="${id_ProductePRO.id_Categoria}"></option>
+													</th:block>
+
+												</select>
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="inputGroupPrepend">
+														<a th:href="@{/categorias/nuevo}" title="Nueva Categoría">
+															<i class="fas fa-tags" style="color: green;"></i>
+													</a>
+													</span>
+												</div>
+												<div class="invalid-feedback">Campo requerido</div>
+											</div>
+										</div>
+										<div class="col-md-6 mb-4 ">
+											<label for="validationCustom04" class="form-label">Presentación
+												del producto: </label> <select th:field="*{presentacion_Producto}"
+												name="presP" id="presentación" class="form-select" required>
+												<option selected disabled value="">Seleccione una
+													opción</option>
+												<option value="Caja">Caja</option>
+												<option value="Paquete">Paquete</option>
+												<option value="Lata">Lata</option>
+												<option value="Galón">Galón</option>
+												<option value="Botella">Botella</option>
+												<option value="Tira">Tira</option>
+												<option value="Sobre">Sobre</option>
+												<option value="Bolsa">Bolsa</option>
+												<option value="Saco">Saco</option>
+												<option value="Tableta">Tableta</option>
+												<option value="Otro">Otro</option>
+											</select>
+											<div class="invalid-feedback">Campo requerido</div>
+										</div>
+									</div>
+									<div class="form-frow row">
+										<div class="col-md-6 mb-4 mt-1 ">
+											<label for="validationCustom04" class="form-label">
+												Contenido producto: </label> <input th:field="*{contenido_Product}"
+												type="number" class="form-control" min="0" name="conteP"
+												id="contenido" required placeholder="Ej: 500">
+											<div class="valid-feedback">Ingreso de datos correcto</div>
+											<div class="invalid-feedback">campo requerido</div>
+										</div>
+										<div class="col-md-6 mb-4 mt-1">
+											<label for="validationCustom04" class="form-label">Unidad
+												medida:</label> <select th:field="*{unidad_Medida}"
+												class="form-select" name="medidaP" id="medida" required>
+												<option selected disabled value="">Seleccione una
+													opción</option>
+												<option value="Kilogramo">Kilogramo (Kg)</option>
+												<option value="Gramo">Gramo (g)</option>
+												<option value="Miligramo">Miligramo (mg)</option>
+												<option value="Litro">Litro (L)</option>
+												<option value="Mililitro">Mililitro (ml)</option>
+												<option value="Otro">Otro</option>
+											</select>
+											<div class="invalid-feedback">Campo requerido</div>
+										</div>
+										<div class="col-md-6 mb-4 mt-3 ">
+											<label for="validationCustom04" class="form-label">Costo
+												producción: </label> <input type="number"
+												th:field="*{costoProduccion}" min="0" class="form-control"
+												name="costoP" id="precioEntrada" required
+												placeholder="Ej: precio Entrada">
+											<div class="valid-feedback">Ingreso de datos correcto</div>
+											<div class="invalid-feedback">campo requerido</div>
+										</div>
+										<div class="col-md-6 mb-4 mt-3 ">
+											<label for="validationCustom04" class="form-label">Precio
+												de venta : </label> <input type="number"
+												th:field="*{valorUnitarioVenta}" min="0" class="form-control"
+												name="precioP" id="PrecioVenta" required
+												placeholder="Ej: Precio Venta">
+											<div class="valid-feedback">Ingreso de datos correcto</div>
+											<div class="invalid-feedback">campo requerido</div>
+										</div>
+										<div class="col-md-6 mb-2 ">
+											<label for="validationCustom04" class="form-label">
+												Stock Mínimo: </label> <input type="number"
+												th:field="*{stock_Minimo}" min="0" class="form-control" name="mini"
+												id="mini" required>
+											<div class="valid-feedback">Ingreso de datos correcto</div>
+											<div class="invalid-feedback">campo requerido</div>
+										</div>
+										<div class="col-md-6 mb-4 mb-2">
+											<label for="validationCustom04" class="form-label">
+												Stock Actual: </label> 
+												<input th:if="${producto.codProduct == null}" type="number" value="0" min="0" max="0" placeholder="0"  th:field="*{stock_Actual}"  class="form-control" name="stock" id="stock" required >
+												<input th:unless="${producto.codProduct == null}" type="number" value="0" min="0" max="0" placeholder="0"  th:field="*{stock_Actual}"  class="form-control" name="stock" id="stock" required readonly="readonly">
+												
+												
+											
+											<div class="valid-feedback">Ingreso de datos correcto</div>
+											<div class="invalid-feedback">El stock inicial debe ser 0</div>
+										</div>
+									</div>
+									<div class="card-header bg-primary text-center mb-5 "
+										style="font-size: 25px;">
+										<i class="fas fa-images"></i> Foto o imagen del producto
+									</div>
+									<div class=" contenedor d-flex justify-content-center">
+										<div class="col-md-6 mb-4">
+											<label for="formFile" class="form-label"
+												style="font-size: 18px;">Adjuntar foto</label> <input
+												class="form-control" type="file" name="file" id="file"
+												aria-label="file example" 
+												onchange="return fileValidation()" />
+											<div id="imagePreview"></div>
+											<div class="invalid-feedback">Adjunte una imagen</div>
+										</div>
+									</div>
+
+									<div class=" contenedor d-flex justify-content-center">
+										<div class="alert alert-danger  mt-3 mb-5">
+											<p class="mb 0">
+												<strong>Tipos de archivos permitodos: JPG,JPEG,PNG,
+													Tamaño máximo 5MB. Resolución recomendada 300px X 300px o
+													superior manteniendo el aspecto cuadrado (1:1)</strong>
+											</p>
+										</div>
+									</div>
+									<div class="text-center mb-4">
+										<button class="btn btn-primary" type="reset">Limpiar</button>
+										<input class="btn btn-primary" type="submit" name="btnGrabar"
+											value="Guardar"> </input>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<br>
+		</div>
+	</div>
+
+	<script src="../../js/jquery-3.5.1.slim.min.js"></script>
+	<script src="../../js/popper.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	 <script src="/../../js/funciones.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="../../js/validación.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+		function ValidarProduct() {
+			var mini = document.getElementById('mini').value;
+			var codigoB = document.getElementById("codigoB").value;
+			var sku = document.getElementById("sku").value;
+			var nombreP = document.getElementById("nombreP").value;
+			var contenido = document.getElementById("contenido").value;
+			var medida = document.getElementById("medida");
+			var presen = document.getElementById("presentación");
+			var precioEntrada = document.getElementById("precioEntrada").value;
+			var PrecioVenta = document.getElementById("PrecioVenta").value;
+			var categoriaP = document.getElementById("categoriaP");
+			var estado = document.getElementById('estado');
+
+			if (!codigoB || codigoB == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!sku || sku == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!nombreP || nombreP == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+
+			if (!contenido || contenido == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!precioEntrada || precioEntrada == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+
+			if (!PrecioVenta || PrecioVenta == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (estado.value == 0 || estado.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione algún estado',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (medida.value == 0 || medida.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione una unidad de medida',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (presen.value == 0 || presen.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione el tipo de presentación',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (categoriaP.value == 0 || categoriaP.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione una Categoria',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!mini || mini == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Ingrese la cantidad mínima del stock',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+
+			if (document.getElementById("file").files.length == 0) {
+				Swal.fire({
+					icon : 'error',
+					title : 'Imagen Requerida',
+					text : 'Seleccione la imagen del producto',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			/*else {
+			    Swal.fire({
+			        icon: 'success',
+			        title: 'Exito',
+			        text: 'Los datos fueron guardados',
+			        showConfirmButton: true,
+			        timer: 8000
+			    });
+			    return false;
+			}*/
+		}
+
+		function fileValidation() {
+			var fileInput = document.getElementById('file');
+			var filePath = fileInput.value;
+			var allowedExtensions = /(.jpg|.jpeg|.png|.gif)$/i;
+			if (!allowedExtensions.exec(filePath)) {
+				alert('Cargue el archivo con las extensiones .jpeg / .jpg / .png / .gif únicamente.');
+				fileInput.value = '';
+				return false;
+			} else {
+				//Image preview
+				if (fileInput.files && fileInput.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						document.getElementById('imagePreview').innerHTML = '<img src="' + e.target.result + '"/>';
+					};
+					reader.readAsDataURL(fileInput.files[0]);
+				}
+			}
+		}
+
+		document
+				.getElementById("formulario1")
+				.addEventListener(
+						"submit",
+						function(event) {
+							var lote = document.getElementById("lote").value;
+							var fecha = document.getElementById("fecha").value;
+							let hasError = false;
+							if (!document
+									.querySelector('input[name="exp"]:checked')) {
+								Swal
+										.fire({
+											icon : 'error',
+											title : 'Atención',
+											text : 'No se ha establecido el vencimiento del producto',
+											showConfirmButton : true,
+											timer : 8000
+										});
+								hasError = true;
+							}
+							if (document
+									.querySelector('input[name="exp"]:checked').value == 1) {
+								if (lote == "" || fecha == "") {
+									Swal.fire({
+										icon : "error",
+										title : "Datos Incompletos",
+										text : "Se requiere la fecha",
+
+										showConfirmButton : true,
+										timer : 8000,
+									});
+									return false;
+								}
+								hasError = true;
+							}
+							if (hasError)
+								event.preventDefault();
+						});
+	</script>
+</body>
+
+</html>

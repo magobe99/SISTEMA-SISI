@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head >
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Inicio | SISI</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+
+<link rel="icon" href="img/ISOTIPO.png" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/admin1estilos.css" />
+<link rel="stylesheet" href="data/datatables.min.css" />
+</head>
+
+<body id="body">
+	<div class="container" th:fragment="html_navbar">
+		<div class="row">
+			<nav
+				class="navbar navbar-brand navbar-expand-lg navbar-dark fixed-top bg-dark contenedor d-flex justify-content-between">
+				<button class="navbar-toggler" type="text" data-toggle="collapse"
+					data-target="" aria-expanded="true" aria-label="Toggle navigation"
+					aria-controls="navbarNav">
+					<span class="menu2 mb-2">
+						<li><span class="fa-solid fa-bars mb-2 mt-1"></span>
+							<ul class="submenu5">
+								<!-- DESDE ACA EL FORMULARIO -->
+								<li><a th:href="@{/index}"><i class="fas fa-home"></i> Inicio</a></li>
+								<!-- PROVEEDORES -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/proveedores}"><i class="fas fa-truck"></i> Proveedores</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/proveedores}"><i class="fas fa-truck"></i> Proveedores</a></li>
+								<!-- USUARIOS -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/usuarios}"><i class="fas fa-user-circle"></i> Usuarios</a></li>
+								<!-- CLIENTES -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/clientes}"><i class="fas fa-user"></i> Clientes</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/clientes}"><i class="fas fa-user"></i> Clientes</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}"><a th:href="@{/clientes}"><i class="fas fa-user"></i> Clientes</a></li>
+								<!-- INVENTARIOS -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/inventarios}"><i class="fas fa-boxes"></i> Inventarios</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/inventarios}"><i class="fas fa-boxes"></i> Inventarios</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}"><a th:href="@{/productosPRO}"><i class="fas fa-boxes"></i> Inventarios</a></li>
+								<!-- COMPRAS-->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/compras/}"><i class="fas fa-shopping-bag"></i> Compras</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/compras/}"><i class="fas fa-shopping-bag"></i> Compras</a></li>
+								<!-- VENTAS -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/ventas/}"><i class="fas fa-coins"></i> Ventas</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/ventas/}"><i class="fas fa-coins"></i> Ventas</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}"><a th:href="@{/ventas/}"><i class="fas fa-coins"></i> Ventas</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" sec:authorize="isAuthenticated()"><a th:href="@{/contact2}"><i class="fa-regular fa-message"></i> Contacto Usuarios</a></li>
+									<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" sec:authorize="isAuthenticated()"><a th:href="@{/contact}"><i class="fa-regular fa-paper-plane"></i> Contacto Clientes</a></li>
+									<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+							</ul>
+						</li>
+					</span>
+				</button>
+				<div class="logosis mb-2">
+				 <a th:href="@{/index}"><img src="/img/SISI.png" /></a>
+				</div>
+				<a class=" mb-2" type="text">
+				</a>
+				<div class="navbar-brand menu2 mt-4">
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<div class="mt-1">
+							<input list="search" class="input1" type="search" id="buscar"
+								placeholder="   Buscar.." />
+								<datalist id="search">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="proveedores">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="proveedores">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="nuevo proveedor">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="nuevo proveedor">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="usuarios">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="nuevo usuario">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="roles">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="nuevo rol">
+								  <option value="clientes">
+								  <option value="nuevo cliente">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="inventario">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="inventario">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="categorías">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="categorías">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="nueva categoría">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="nueva categoría">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="materias primas">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="materias primas">
+								  <option value="productos procesados">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="nueva materia prima">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="nueva materia prima">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="nuevo producto procesado">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="nuevo producto procesado">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="producciones">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="producciones">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="lotes">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="lotes">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="movimientos materia prima">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="movimientos materia prima">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="movimientos productos procesados">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="moviminetos productos procesados">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="compras">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="compras">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="nueva compra">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="nueva compra">
+								  <option value="ventas">
+								  <option value="nueva venta">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="contacto clientes">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="contacto clientes">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" value="contacto usuarios">
+								  <option th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" value="contacto usuarios">
+								</datalist>
+							<button id="btn" type="submit" class="btn ">
+								<i class="fa fa-search" style="color: white"></i>
+							</button>
+							<div id="panel" class="panel"></div>
+						</div>
+						<ul class="mb-4">
+							<li><a href="#" class="text-white"><i style="font-size: 18px" class="fas fa-user-circle"></i>
+								<span th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" >Administrador</span>
+								<span th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" >Coordinador Logístico</span>
+								<span th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}" >Vendedor</span>
+							</a>
+								<ul class="submenu4" style="color: white">
+									<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" sec:authorize="isAuthenticated()"><a th:href="@{/contact2}"><i class="fa-regular fa-message"></i> Contacto Usuarios</a></li>
+									<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" sec:authorize="isAuthenticated()"><a th:href="@{/contact}"><i class="fa-regular fa-paper-plane"></i> Contacto Clientes</a></li>
+									<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<!-- DESDE ACA Menú Lateral -->
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+				<div class="col-lg-3 col-md-4 menu__side" id="menu_side" th:fragment="html_menulateral">
+				<div class="wrapper">
+					<nav id="sidebar">
+						<div class="home">
+							<div class="cot2">
+								<div class="foto mb-2">
+									<a th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" th:href="@{/index}"><img src="https://pbs.twimg.com/media/FVj7Ee3XoAEHhJQ?format=png&name=small" /></a>
+									<a th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" th:href="@{/index}"><img src="https://pbs.twimg.com/media/FVj7Ee3WYAEkb2X?format=png&name=small" /></a>
+									<a th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}" th:href="@{/index}"><img src="https://pbs.twimg.com/media/FVj7Ee2XoAMC8by?format=png&name=small" /></a>
+								</div>
+								<div>
+									<h5 style="margin-bottom: 0px;margin-top: 0px;" sec:authentication="principal.username"> </h5>
+									<p th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" class="mb-2" style="color: white">Administrador</p>
+									<p th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" class="mb-2" style="color: white">Coordinador Logístico</p>
+									<p th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}" class="mb-2" style="color: white">Vendedor</p>
+								</div>
+							</div>
+						</div>
+						<ul class="menu pt-3">
+								<!-- DESDE ACA EL FORMULARIO -->
+								<li><a th:href="@{/index}"><i class="fas fa-home"></i> Inicio</a></li>
+								<!-- PROVEEDORES -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/proveedores}"><i class="fas fa-truck"></i> Proveedores</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/proveedores}"><i class="fas fa-truck"></i> Proveedores</a></li>
+								<!-- USUARIOS -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/usuarios}"><i class="fas fa-user-circle"></i> Usuarios</a></li>
+								<!-- CLIENTES -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/clientes}"><i class="fas fa-user"></i> Clientes</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/clientes}"><i class="fas fa-user"></i> Clientes</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}"><a th:href="@{/clientes}"><i class="fas fa-user"></i> Clientes</a></li>
+								<!-- INVENTARIOS -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/inventarios}"><i class="fas fa-boxes"></i> Inventarios</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/inventarios}"><i class="fas fa-boxes"></i> Inventarios</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}"><a th:href="@{/productosPRO/}"><i class="fas fa-boxes"></i> Inventarios</a></li>
+								<!-- COMPRAS-->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/compras/}"><i class="fas fa-shopping-bag"></i> Compras</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/compras/}"><i class="fas fa-shopping-bag"></i> Compras</a></li>
+								<!-- VENTAS -->
+								<li th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"><a th:href="@{/ventas/}"><i class="fas fa-coins"></i> Ventas</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"><a th:href="@{/ventas/}"><i class="fas fa-coins"></i> Ventas</a></li>
+								<li th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}"><a th:href="@{/vender/}"><i class="fas fa-coins"></i> Ventas</a></li>
+							<div class="end_nav"></div>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- DESDE ACA EL FORMULARIO -->
+			<div class="col-lg-8 col-md-8">
+				<br /> <br /> <br />
+				<div class="row mt-5">
+					<div  class="jumbotron mb-5 col-lg-12 mb-4">
+						<img th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" src="https://pbs.twimg.com/media/FVj6flkWIAA0Wvo?format=jpg&name=medium" class="img-fluid Larger shadow img-index" alt="PortadaAdmin" />
+						<img th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" style="opacity: 92%;" src="https://pbs.twimg.com/media/FVj6fljWQAAT8Gy?format=jpg&name=4096x4096" class="img-fluid Larger shadow img-index" alt="PortadaCoordinador" />
+						<img th:if="${#authorization.expression('hasRole(''ROLE_VENDEDOR'')')}" src="https://pbs.twimg.com/media/FVj6flkXsAATaEc?format=jpg&name=4096x4096" class="img-fluid Larger shadow img-index" alt="PortadaVendedor" />	
+					</div>
+				</div>
+				<div th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'') OR hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" class="row">
+					<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+						<div class="card">
+							<div class="card-body"
+								style="background: url(https://pbs.twimg.com/media/FVj3QuAXEAMO51q?format=jpg&name=4096x4096); background-size: cover; opacity: 90%;">
+								<div class="row">
+									<div class="col-112 mt-2 text-center" style="color: white">
+										<span style="font-size: 33px; color: white"><a style="font-size: 33px; color: white" th:href="@{/proveedores}"><i 
+											class="far fa-arrow-alt-circle-right"></i></a> 
+										</span><h3 class="card-tittle mb-1"
+											style="font-size: 18px; color: white">
+												<b><a style="font-size: 18px; color: white; text-decoration:none;" th:href="@{/proveedores/}">PROVEEDORES</a></b>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+						<div class="card">
+							<div class="card-body"
+								style="background: url(https://pbs.twimg.com/media/FVj3UWuX0AYqvdx?format=jpg&name=4096x4096); background-size: cover; opacity: 90%;">
+								<div class="row">
+									<div class="col-12 mt-2 text-center" style="color: white">
+										<span style="font-size: 33px; color: white"><a style="font-size: 33px; color: white" th:href="@{/compras/}"> 
+											<i 
+											class="fas fa-coins"></i>
+										</a> 
+										</span>
+										<h3 class="card-tittle mb-1"
+											style="font-size: 18px; color: white">
+												<b><a style="font-size: 18px; color: white; text-decoration:none;" th:href="@{/compras/}">COMPRAS</a></b>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+						<div class="card">
+							<div class="card-body"
+								style="background: url(https://pbs.twimg.com/media/FVj3UXyWAAAWoMa?format=jpg&name=4096x4096); background-size: cover; opacity: 90%;">
+								<div class="row">
+									<div class="col-12 mt-2 text-center" style="color: white">
+										<span style="font-size: 33px; color: white; text-decoration:none;"> <a style="font-size: 33px; color: white" th:href="@{/inventarios/}">
+										<i
+											class="fas fa-chart-bar"></i>
+										</a>
+										</span>
+										<h3 class="card-tittle mb-1"
+											style="font-size: 18px; color: white; text-decoration:none;">
+											<b><a style="font-size: 18px; color: white; text-decoration:none;" th:href="@{/inventarios/}">INVENTARIOS</a></b>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+						<div class="card">
+							<div class="card-body"
+								style="background: url(https://pbs.twimg.com/media/FVj3UXHXsAAbfzr?format=jpg&name=4096x4096); background-size: cover; opacity: 90%;">
+								<div class="row">
+									<div class="col-12 mt-2 text-center" style="color: white">
+										<span style="font-size: 33px; color: white"><a style="font-size: 33px; color: white" th:href="@{/ventas/}"><i
+											class="fas fa-dollar-sign"></i></a> 
+										</span>
+										<h3 class="card-tittle mb-1"
+											style="font-size: 18px; color: white; text-decoration:none;">
+												<b><a style="font-size: 18px; color: white; text-decoration:none;" th:href="@{/ventas/}">VENTAS</a></b>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:unless="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'') OR hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" class="row">
+					<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+						<div class="card">
+							<div class="card-body"
+								style="background: url(https://pbs.twimg.com/media/FVj3QuAXEAMO51q?format=jpg&name=4096x4096); background-size: cover; opacity: 90%;">
+								<div class="row">
+									<div class="col-112 mt-2 text-center" style="color: white">
+										<span style="font-size: 33px; color: white"><a style="font-size: 33px; color: white" th:href="@{/clientes}"><i 
+											class="far fa-arrow-alt-circle-right"></i></a> 
+										</span><h3 class="card-tittle mb-1"
+											style="font-size: 18px; color: white">
+												<b><a style="font-size: 18px; color: white; text-decoration:none;" th:href="@{/clientes/}">CLIENTES</a></b>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+						<div class="card">
+							<div class="card-body"
+								style="background: url(https://pbs.twimg.com/media/FVj3UXyWAAAWoMa?format=jpg&name=4096x4096); background-size: cover; opacity: 90%;">
+								<div class="row">
+							
+									<div class="col-12 mt-2 text-center" style="color: white">
+										<span style="font-size: 33px; color: white; text-decoration:none;"> <a style="font-size: 33px; color: white" th:href="@{/productosPRO/}">
+										<i
+											class="fas fa-chart-bar"></i>
+										</a>
+										</span>
+										<h3 class="card-tittle mb-1"
+											style="font-size: 18px; color: white; text-decoration:none;">
+											<b><a style="font-size: 18px; color: white; text-decoration:none;" th:href="@{/productosPRO/}">INVENTARIO</a></b>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
+						<div class="card">
+							<div class="card-body"
+								style="background: url(https://pbs.twimg.com/media/FVj3UXHXsAAbfzr?format=jpg&name=4096x4096); background-size: cover; opacity: 90%;">
+								<div class="row">
+									<div class="col-12 mt-2 text-center" style="color: white">
+										<span style="font-size: 33px; color: white"><a style="font-size: 33px; color: white" th:href="@{/ventas/}"><i
+											class="fas fa-dollar-sign"></i></a> 
+										</span>
+										<h3 class="card-tittle mb-1"
+											style="font-size: 18px; color: white; text-decoration:none;">
+												<b><a style="font-size: 18px; color: white; text-decoration:none;" th:href="@{/ventas/}">VENTAS</a></b>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 text-center">
+						<div>
+							<table class="table table-light table-striped">
+								<h1 class="mt-5 bg-dark pb-4 pt-3"
+									style="color: white; font-size: 22px; background-color: darkcyan;">
+									<i class="fas fa-hand-holding-usd"></i> Nuestros Productos
+								</h1>
+								<thead class=" text-center">
+									<tr class="text-center">
+										<th scope="col">Nombre</th>
+										<th scope="col">Disponibles</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="text-center"
+										th:each="productoPRO : ${listarProductosPRO}">
+										<td th:text="${productoPRO.nom_Product}"></td>
+										<td th:text="${productoPRO.stock_Actual}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 mt-4">
+						<h3 class="text-center mt-1" style="font-size: 35px">
+							<i class="fas fa-users"></i> CLIENTES FRECUENTES
+							<hr />
+						</h3>
+<div class="table-responsive-xl mt-4" style="font-size: 12px;">
+                    <table id="example" class="table table-light table-bordered  table-striped mt-5"
+                      style="border-collapse: 50px; ">
+                      <thead class="table-dark text-center">
+                        <tr>
+                          <th scope="col">Documento</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Teléfono</th>
+                          <th scope="col">Correo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                <tr class="text-center" th:each="cliente : ${listarClientes}">
+                    <td th:text="${cliente.DocCliente}"></td>
+                    <td th:text="${cliente.nombres} + ' ' + ${cliente.apellidos}"></td>
+                    <td th:text="${cliente.telefono}"></td>
+                    <td th:text="${cliente.correo}"></td>
+                </tr>
+                      </tbody>
+                    </table>
+                  </div>
+						<br/>
+					</div>
+				</div>
+				<br/>
+			</div>
+		</div>
+	</div>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="data/datatables.min.js"></script>
+	<script src="js/tabla.js"></script>
+	<script src="js/funciones.js"></script>
+	<script
+						src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		
+</body>
+
+</html>

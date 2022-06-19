@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nueva Compra | SISI</title>
+<link rel="icon" href="/../img/ISOTIPO.png">
+<link rel="stylesheet" href="/../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="/../css/admin1estilos.css">
+<link rel="stylesheet" href="../data/datatables.min.css">
+<link rel="stylesheet"
+	href="/../data/DataTables-1.11.2/css/dataTables.bootstrap.min.css">
+</head>
+
+<body>
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2 ">
+		<div class="row ">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br>
+				<br>
+				<br>
+				<div class="container-fluid ">
+					<div class="col-md-12 mt-3 dash">
+						<div class="title">
+							<h2 style="font-size: 50px">NUEVA COMPRA</h2>
+							<h5 style="font-size: 32px; color: rgba(230, 149, 28, 0.733);">
+								MATERIA PRIMA</h5>
+							<div class="row">
+								<div
+									class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+									<a class="option_prov" th:href="@{/comprar/}"><i
+										class="fas fa-tags"></i> NUEVA COMPRA</a>
+								</div>
+								<div
+									class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+									<a class="option_prov" th:href="@{/compras/}"><i
+										class="fa fa-list"></i> COMPRAS REALIZADAS</a>
+								</div>
+							</div>
+						</div>
+						<div class="shadow-lg  mt-4 "
+							style="background-color: rgb(204, 213, 220, 1)">
+							<main layout:fragment="contenido">
+								<div class="text-center" style="font-size: 17px;">
+									<b>
+										<div
+											th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+											th:if="${mensaje != null}" th:text="${mensaje}"
+											class="alert "></div>
+									</b>
+								</div>
+								<div class="row d-flex ">
+									<div class="col-lg-4 pb-3 m-0"
+										style="background-color: #CCD5DC">
+										<div class="p-3 flex-shrink-1 "
+											style="background-color: #808B96">
+											<form th:action="@{/comprar/agregar}" th:object="${producto}"
+												method="post">
+												<div class="row form-group">
+													<input type="text" th:field="*{IdMateriaPrima}"
+														hidden="true" />
+													<div class="col-lg-12 col-md-4 col-sm-4">
+														<label for="codigo" style="color: #232323"><b>Código
+																:</b></label>
+														<div class="input-group mb-1">
+															<input th:field="*{codMateriaPrima}" class="form-control"
+																type="text" list="browsers2" name="myBrowser2" />
+															<datalist id="browsers2">
+																<th:block th:each="producto : ${listaMateriaPrima}">
+																	<option
+																		th:text="${producto.nomMateriaPrima} + ' ' + ${producto.contenido_Product} + ' ' + ${producto.unidad_Medidad}"
+																		th:value="${producto.codMateriaPrima}"></option>
+																</th:block>
+															</datalist>
+															<div class="input-group-prepend">
+																<span class="input-group-text" id="inputGroupPrepend">
+																	<a th:href="@{/productos/nuevo}" title="Nuevo Producto">
+																		<i class="fa-solid fa-box" style="color: #6AA545"></i>
+																</a>
+																</span>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-12 col-md-4 col-sm-4">
+														<label for="codigo" style="color: #232323"><b>Cantidad
+																:</b></label> <input type="number" class="form-control" value="1"
+															name="cantidad" id="cantidad" placeholder="1" min="0" />
+													</div>
+													<div class="col-lg-12 col-md-4 col-sm-4">
+														<label for="precio" style="color: #232323"><b>Precio
+																:</b></label> <input type="number" class="form-control" value="0"
+															name="precio" id="precio" placeholder="0" min="0"
+															required />
+													</div>
+													<div class="invalid-feedback"
+														th:errors="*{codMateriaPrima}"></div>
+													<div class="d-flex flex-row-reverse bd-highlight ">
+														<button type="submit" class="btn btn-primary mt-2 ">
+															Agregar&nbsp;<i class="fa fa-check"></i>
+														</button>
+													</div>
+												</div>
+											</form>
+											<form class="mb-2 justify-content-flex-end needs-validation"
+												th:object="${compra}" th:action="@{/comprar/terminar}"
+												method="post" novalidate>
+												<div class="row form-group">
+													<div class="col-lg-12 col-md-6 col-sm-6">
+														<label for="codigo" style="color: #232323"><b>Proveedor
+																:</b></label>
+														<div class="input-group mb-1">
+															<input th:field="*{proveedor}" class="form-control"
+																type="text" list="prove" name="prove" required />
+															<datalist id="prove">
+																<th:block th:each="proveedor: ${listaProveedores}">
+																	<option
+																		th:text="${proveedor.doc_Proveedor} + ' - ' + ${proveedor.nomEmpresa}"
+																		th:value="${proveedor.id}"></option>
+																</th:block>
+															</datalist>
+															<div class="input-group-prepend">
+																<span class="input-group-text" id="inputGroupPrepend">
+																	<a th:href="@{/proveedores/nuevo}"
+																	title="Nuevo Proveedor"> <i class="fas fa-tags"
+																		style="color: #6AA545;"></i>
+																</a>
+																</span>
+															</div>
+															<div class="invalid-feedback">Campo requerido</div>
+														</div>
+													</div>
+													<div class="col-lg-12 col-md-6 col-sm-6">
+														<label for="codigo" style="color: #232323"><b>Usuario
+																:</b></label> <select th:field="*{usuario}" name="usuario"
+															id="usuario" class="form-select" required>
+															<th:block th:each="usuario: ${listaUsuarios}">
+
+																<option
+																	th:text="${usuario.codUsuario} + ' - ' + ${usuario.nombre} + ' ' + ${usuario.apellido}"
+																	th:value="${usuario.id}"></option>
+															</th:block>
+														</select>
+														<div class="invalid-feedback">Campo requerido</div>
+													</div>
+													<div
+														class="d-flex  justify-content-center bd-highlight mt-2 col-lg-12">
+														<div class="p-2 bd-highlight">
+															<a th:href="@{/comprar/limpiar}" class="btn btn-danger">Cancelar&nbsp;
+															</a>
+														</div>
+														<div class="p-2 bd-highlight">
+															<button type="submit" class="btn btn-success">Terminar&nbsp;</button>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="col-lg-8 bd-highlight"
+										style="background-color: white">
+										<div class="p-2 w-100 bd-highlight"
+											style="background-color: white">
+											<h1 style="font-size: 35px; text-align: left"
+												th:text="${'Total: ' + total}"></h1>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<thead>
+														<tr class="text-center">
+															<th>Nombre</th>
+															<th>Código</th>
+															<th>Precio</th>
+															<th>Cantidad</th>
+															<th>Total</th>
+															<th>Quitar</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="producto, iterador : ${session.carrito2}">
+															<td th:text="${producto.nomMateriaPrima}"></td>
+															<td th:text="${producto.codMateriaPrima}"></td>
+															<td th:text="${producto.precio}"></td>
+															<td th:text="${producto.cantidad}"></td>
+															<td th:text="${producto.total}"></td>
+															<td class="text-center">
+																<form
+																	th:action="@{/comprar/quitar/} + ${iterador.index}"
+																	method="post">
+																	<button type="submit" class="btn btn-danger">
+																		<i class="fa fa-trash"></i>
+																	</button>
+																</form>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</main>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="end_nav3"></div>
+			</div>
+		</div>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="../js/validación.js"></script>
+	<script src="../js/funciones.js"></script>
+</body>
+</html>

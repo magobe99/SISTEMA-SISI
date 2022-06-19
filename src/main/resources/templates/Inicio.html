@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inicio | SISI</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/navegador.css">
+<link rel="icon" href="img/ISOTIPO.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<header>
+	<div class="containter">
+		<div class="row">
+			<a name="inicio"></a>
+			<nav class="navbar navbar-expand-lg navbar-dark fixed-top "
+				style="background: #12122d;">
+				<a href="" class="navbar  logosis"> <img src="img/SISI.png">
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarNav" aria-expanded="false"
+					aria-label="toggle navigation" aria-controls="navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="colapse navbar-collapse justify-content-end"
+					id="navbarNav">
+					<ul class="navbar-nav ">
+						<li class="nav-item "><a th:href="@{/}"
+							class="nav-link " style="color: white; font-size: 15px;">INICIO
+						</a></li>
+						<li class="nav-item"><a href="#adsi" class="nav-link"
+							style="color: white; font-size: 15px;">PORTAFOLIO </a></li>
+						<li class="nav-item"><a href="#somos" class="nav-link"
+							style="color: white; font-size: 15px;">QUIÉNES SOMOS </a></li>
+						<li class="nav-item"><a href="#contac" class="nav-link"
+							style="color: white; font-size: 15px;">CONTÁCTENOS </a></li>
+
+						<li class="nav-item"><a th:href="@{/index}"
+							class="nav-link" style="color: white; font-size: 15px;">INGRESAR
+						</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+</header>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<a name="inicio"></a>
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ban">
+				<section class="slider_section">
+					<img class="first-slide" src="https://pbs.twimg.com/media/FVj3UYzWQAIggOE?format=jpg&name=4096x4096" alt="First slide">
+				</section>
+			</div>
+		</div>
+	</div>
+	<!-- about -->
+	<div id="about" class="about">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-5 col-lg-5 col-md-5 co-sm-l2">
+					<div class="about_box">
+						<h2>
+							Acerca de SISI<br>
+							<strong class="black"> Nuestro Sistema</strong>
+						</h2>
+						<p>SISI es un sistema de información elaborado para cumplir
+							las necesidades administrativas y de gestión relacionados a las
+							empresas, que tiene como objetivo facilitar la etapa de
+							almacenaje de los productos, reducir las tareas administrativas,
+							agilizar los procesos logísticos y optimizar los tiempos de
+							producción , teniendo SISI como visión poder expandir su servicio
+							a todo tipo sectores y empresas .</p>
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7 co-sm-l2">
+					<div class="about_img">
+						<figure>
+							<img src="https://www.comunidadbaratz.com/wp-content/uploads/2021/05/El-termino-fuentes-de-informacion-es-muy-generico-y-abarca-un-incontable-numero-de-instrumentos.jpg" alt="img" />
+						</figure>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end about -->
+	<a name="adsi"></a>
+	<!-- offer -->
+	<div class="offer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="title">
+						<h2>Portafolio</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="offer-bg">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 ">
+						<div class="offer_box">
+							<h3>Inventarios</h3>
+							<figure>
+								<img src="https://pbs.twimg.com/media/FVjzmA6X0AIriTK?format=jpg&name=large" style="border-radius: 50px;" alt="img" />
+							</figure>
+							<p>Utilizando SISI La eficiencia de inventarios llega al
+								100%, reduciendo el tiempo de alistamientos y evitando asi
+								obsolescencia de inventario por vencimiento.</p>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin_ttt">
+						<div class="offer_box">
+							<h3>Ventas</h3>
+							<figure>
+								<img src="https://www.yittbox.com/image/excel-image-5.png" style="border-radius: 50px;" alt="img" />
+							</figure>
+							<p>Debido al registro de la información en tiempo real en
+								cada uno de los procesos y eventos que ocurren en el centro de
+								distribución es posible realizar el seguimiento de todas las
+								transacciones por proceso, articulo, pedido, usuario, etc.</p>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin-lkk">
+						<div class="offer_box">
+							<h3>Proveedores</h3>
+							<figure>
+								<img src="https://st2.depositphotos.com/42965482/45370/v/450/depositphotos_453703740-stock-illustration-customs-clearance-abstract-concept-vector.jpg" style="border-radius: 50px;"
+									alt="img" />
+							</figure>
+							<p>Podrá almacenar información actualizada, centralizada y
+								validada de los proveedores nacionales y extranjeros. Esto lo
+								ayudara a disponer de información centralizada, oportuna y
+								actualizada.</p>
+						</div>
+					</div>
+					<a name="somos"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end offer -->
+	<!-- clients -->
+	<div id="testimonial" class="clients">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 mt-5">
+					<div class="title">
+						<h2>
+							Sobre <strong class="black">Nosotros</strong>
+						</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clients_red">
+		<div class="container">
+			<div id="testimonial_slider" class="carousel slide"
+				data-ride="carousel">
+				<!-- Indicators -->
+				<ul class="carousel-indicators">
+					<li data-target="#testimonial_slider" data-slide-to="0" class=""></li>
+					<li data-target="#testimonial_slider" data-slide-to="1"
+						class="active"></li>
+					<li data-target="#testimonial_slider" data-slide-to="2" class=""></li>
+				</ul>
+				<!-- The slideshow -->
+				<div class="carousel-inner">
+					<div class="carousel-item">
+						<div class="testomonial_section">
+							<div class="full testimonial_cont text_align_center cross_layout">
+								<div class="row">
+									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 pa_right">
+										<div class="testomonial_img">
+											<i><img src="https://pbs.twimg.com/media/FVjzmA6WIAE0C97?format=jpg&name=large" alt="#" /></i>
+										</div>
+									</div>
+									<div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 pa_left">
+										<div class="cross_inner">
+											<h3>
+												<strong class="ornage_color">NUESTROS</strong><br>OBJETIVOS
+											</h3>
+											<p>
+												<img src="img/1.png" alt="#" />Ser una Empresa reconocida y
+												elegida como “socio tecnológico” de sus clientes por la
+												calidad de las propuestas y el estricto cumplimiento de los
+												compromisos asumidos. <img src="img/2.png" alt="#" />
+											</p>
+											<p>
+												<img src="img/1.png" alt="#" />Ofrecer soluciones reales a
+												las problemáticas actuales en el mundo de la logística, ya
+												que tiene grandes características, cada una pensada con el
+												propósito de dar plena satisfacción a nuestros clientes. <img
+													src="img/2.png" alt="#" />
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item active">
+						<div class="testomonial_section">
+							<div class="full center"></div>
+							<div class="full testimonial_cont text_align_center cross_layout">
+								<div class="row">
+									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 pa_right">
+										<div class="testomonial_img">
+											<i><img src="https://img.freepik.com/vector-gratis/ilustracion-concepto-mision-empresarial_114360-7475.jpg?w=2000" alt="#" /></i>
+										</div>
+									</div>
+									<div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 pa_left">
+										<div class="cross_inner">
+											<h3>
+												<strong class="ornage_color">NUESTRA</strong><br>MISIÓN
+											</h3>
+											<p>
+												<img src="img/1.png" alt="#" />Ayudar a nuestros clientes a
+												alcanzar sus metas de negocio, ofreciendo soluciones
+												innovadoras e integrales de optimización de inventarios y
+												funciones empresariales, permitiendo así optimizar el
+												proceso administrativo y comercial. Orientando al
+												mejoramiento y optimización de los procesos operativos y
+												logísticos en los Centros de Distribución. <img
+													src="img/2.png" alt="#" />
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="testomonial_section">
+							<div class="full center"></div>
+							<div class="full testimonial_cont text_align_center cross_layout">
+								<div class="row">
+									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 pa_right">
+										<div class="testomonial_img">
+											<i><img src="https://pbs.twimg.com/media/FVjzmA5XwAAg8xS?format=jpg&name=4096x4096" alt="#" /></i>
+										</div>
+									</div>
+									<div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 pa_left">
+										<div class="cross_inner">
+											<h3>
+												<strong class="ornage_color">NUESTRA</strong><br>VISIÓN
+											</h3>
+											<p>
+												<img src="/img/1.png" alt="#" /> SISI alcanzara a ser el
+												sistema control de inventarios y logístico más eficaz a
+												nivel nacional, satisfaciendo así las necesidades de los
+												clientes, ofreciendo excelentes servicios integrados de alta
+												calidad y competitividad, generando resultados
+												extraordinarios. <img src="img/2.png" alt="#" />
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end clients -->
+	<!-- contact -->
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<a name="contac"></a>
+				<div class="title">
+					<h2>
+						Contactanos<strong class="black"></strong>
+					</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid-xl pad">
+		<div class="row">
+			<div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 ">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 pad">
+
+					<form th:action="@{/inicio}" method="post" id="emailForm" class="main_form needs-validation form-sigin mb-1" novalidate
+						onsubmit="return ValidarFormu5()" enctype="multipart/form-data">
+						
+						<p class="text-center" style="color: white; font-size: 22px;">CONTACTA CON NOSOTROS</p>
+						<hr>
+						<div class="row">
+							<div class="col-lg-12">
+								<input class="form-control" placeholder="Nombre" type="text" id="nombre" name="fullname" required>
+							</div>
+							<div class="col-lg-12">
+								<input class="form-control" placeholder="Correo" type="email" id="emailCli" name="email" required>
+							</div>
+							<div class="col-lg-12">
+								<input class="form-control" placeholder="Asunto" type="text" id="asunt" name="subject" required>
+							</div>
+							<div class="col-lg-12">
+								<textarea class="textarea" placeholder="Mensaje" type="text" id="mensaje"  name="content" required></textarea>
+							</div>
+							<div class="col-lg-12">
+								<input type="file" class="form-control" name="attachment" />
+							</div>
+							<div class="col-lg-12 text-center mt-2">
+								<input type="submit" value="Enviar" class="btn btn-primary">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 pad">
+				<div class="map_section">
+					<iframe
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.836772647611!2d-74.08285158589857!3d4.623194143613658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f997ec66ad571%3A0x1f029ba88868af2f!2sSENA%20-%20Centro%20de%20Servicios%20Financieros%20-%20Sede%20M%C3%A9deri!5e0!3m2!1ses!2sco!4v1636138938553!5m2!1ses!2sco"
+						width="100%" height="500" style="border: 0;" allowfullscreen=""
+						loading="lazy"> </iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end contact -->
+	<!--  footer -->
+	<footer>
+		<div class="footer top_layer ">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+						<div class="address">
+							<h3>Enlaces</h3>
+							<ul class="Links_footer">
+								<li><img src="img/3.png" alt="#" /> <a href="#inicio">
+										Inicio</a></li>
+								<li><img src="img/3.png" alt="#" /> <a href="#somos">Sobre
+										Nosotros</a></li>
+								<li><img src="img/3.png" alt="#" /> <a href="#contac">Contáctenos</a>
+								</li>
+								<li><img src="img/3.png" alt="#" /> <a
+									href="ingreso1.html">Ingresar</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+						<div class="address">
+							<h3>Contacto</h3>
+							<ul class="loca">
+								<li><a href="#"><img src="img/loc.png" alt="#" /></a>Cl.24
+									#27 -62 <br>Bogotá, Colombia</li>
+								<li><a href="#"><img src="img/email.png" alt="#" /></a>magobe98@gmail.com
+								</li>
+								<li><a href="#"><img src="img/call.png" alt="#" /></a>+57
+									3219275879</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright">
+			<div class="container">
+				<p>©copyrigth-2021 Todos los derechos reservados a Marlon
+					González Bello</p>
+			</div>
+		</div>
+	</footer>
+	<!-- end footer -->
+	<!-- Javascript files-->
+	<script src="js/jquery-3.5.1.slim.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+
+	<script type="text/javascript">
+		function ValidarFormu5() {
+			var nombre = document.getElementById("nombre").value;
+			var cor = document.getElementById("emailCli").value;
+			var asunt = document.getElementById("asunt").value;
+			var mensaje = document.getElementById("mensaje").value;
+
+			expresion = /\w+@\w+\.+[a-z]/;
+
+			if (!nombre || nombre == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Ups!',
+					text : 'Debe llenar todos los campos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!asunt || asunt == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Mensaje no enviado',
+					text : 'Debe agregar el asunto',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (cor.length > 50) {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo es muy extenso!',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!cor || cor == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo es requerido',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!expresion.test(cor)) {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo no es valido',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!mensaje || mensaje == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Mensaje no enviado',
+					text : 'Debe llenar todos los campos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+		}
+	</script>
+</body>
+
+</html>

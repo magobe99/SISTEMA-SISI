@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Categoría | SISI</title>
+<link rel="icon" href="../../img/ISOTIPO.png">
+<link rel="stylesheet" href="/../../css/bootstrap.min.css">
+<link rel="stylesheet" href="/../../css/admin1estilos.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br>
+				<br>
+				<br>
+				<div class="container-fluid ">
+					<div class="row">
+						<div class="col-md-12 mt-5 dash">
+							<div class="row">
+								<div class="title">
+									<h2 th:if="${categoria.id_Categoria == null}"
+										style="font-size: 42px">NUEVA CATEGORÍA</h2>
+									<h2 th:unless="${categoria.id_Categoria == null}"
+										style="font-size: 42px">ACTUALIZAR CATEGORÍA</h2>
+									<p class="d-flex justify-content-end">
+										<a href="#ident" class="btn"
+											style="border-radius: 50px; background-color: #ffdf7b;"
+											data-toggle="collapse"><i class="fas fa-question-circle"
+											style="color: black;"></i><b style="color: black;"></b></a>
+									</p>
+									<div id="ident" class="collapse">
+										<p class="alert  text-censtart-3"
+											style="color: black; background-color: #ffdf7b; opacity: 90%;">
+											En el módulo CATEGORIA usted podrá registrar las categorias
+											que servirán para agregar productos y tambien podrá ver los
+											productos que pertenecen a una categoria determinada. Además
+											de lo antes mencionado, puede actualizar los datos de las
+											categorias,realizar búsqueda de categorías o eliminarlas si
+											así lo desea.</p>
+									</div>
+								</div>
+							</div>
+							<!-- HASTA ACA ENCABEZADO -->
+							<!-- DESDE ACA LAS OPCIONES -->
+							<div class="row">
+								<div class="text-center option_prov col-lg-12 col-md-6">
+									<a class="option_prov" th:href="@{/inventarios}"><i
+										class="fas fa-boxes"></i> INVENTARIOS</a>
+								</div>
+								<div class="text-center option_prov col-lg-6 col-md-6 mt-3">
+									<a class="option_prov" th:href="@{/categorias/nuevo}"><i
+										class="fas fa-tags"></i> NUEVA CATEGORÍA</a>
+								</div>
+								<div class="text-center option_prov col-lg-6 col-md-6 mt-3">
+									<a class="option_prov" th:href="@{/categorias}"><i
+										class="fa fa-list"></i> LISTA DE CATEGORÍAS</a>
+								</div>
+							</div>
+							<!-- HASTA ACA OPCIONES-->
+							<!-- DESDE ACA EL FORMULARIO -->
+							<br>
+							<div class="container">
+								<div class="row">
+									<div class="col-lg-12 mt-5">
+										<div class="card shadow-lg p-0 mb-5 bg-white">
+											<div class="card-header bg-primary text-center mb-3"
+												style="font-size: 25px;">
+												<i class="far fa-id-card"></i> Información Categoria
+											</div>
+											<div class="card-body">
+												<form th:action="@{/categorias/guardar}"
+													th:object="${categoria}" method="post" id="formulario1"
+													class="needs-validation form-sigin" novalidate
+													onsubmit="return ValidarFormu()">
+													<input type="text" th:field="*{id_Categoria}" hidden="true" />
+													<div class="form-frow row">
+														<div class="col-lg-6 col-md-12  mb-3 mt-2">
+															<label for="validationCustom04" class="form-label">
+																Nombre Categoria: </label> <input th:field="*{nombreCategoria}"
+																type="text" class="form-control" name="nom"
+																id="categoria" required placeholder="Ej: Categoria" />
+															<div class="valid-feedback">Ingreso de datos
+																correcto</div>
+															<div class="invalid-feedback">campo requerido</div>
+														</div>
+														<div class="col-lg-6 col-md-12 mb-3 mt-2">
+															<label for="validationCustom04" class="form-label">Tipo
+																producto: </label> <select th:field="*{tipo_producto}"
+																name="tipo" id="tipoPro" class="form-select" required>
+																<th:block th:each="tipo_producto: ${listaTipo_producto}">
+																	<option th:text="${tipo_producto.nomTipoProducto}"
+																		th:value="${tipo_producto.idTipoProducto}"></option>
+																</th:block>
+															</select>
+														</div>
+														<div class="text-center mt-4 mb-3">
+															<button class="btn btn-primary" type="reset">
+																Limpiar</button>
+															<button class="btn btn-primary" name="btnGrabar"
+																type="submit">Guardar</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div class="end_nav3"></div>
+				<br> <br>
+			</div>
+		</div>
+	</div>
+	<script src="/../../js/jquery-3.5.1.slim.min.js"></script>
+	<script src="/../../js/bootstrap.min.js"></script>
+	<script src="/../../js/validación.js"></script>
+	<script src="/../../js/funciones.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+
+	<script type="text/javascript">
+		function ValidarFormu() {
+			var categoria = document.getElementById("categoria").value;
+			var tipoPro = document.getElementById("tipoPro");
+			var est = document.getElementById("estado");
+			if (!categoria || categoria == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (tipoPro.value == 0 || tipoPro.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione el tipo de producto',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (est.value == 0 || est.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione el estado de la categoría',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sin Resultados | SISI</title>
+<link rel="icon" href="../img/ISOTIPO.png">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../css/admin1estilos.css">
+<link rel="stylesheet" href="../data/datatables.min.css">
+<link rel="stylesheet"
+	href="../data/DataTables-1.11.2/css/dataTables.bootstrap.min.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br>
+				<br>
+				<br>
+				<div class="card text-center" style="border-color: white">
+					<div class="card-body">
+						<img style="width: 60%" class="card-img-top"
+							src="https://pbs.twimg.com/media/FVj7Ee2XwAAKVEz?format=jpg&name=large"
+							alt="Card image cap">
+						<h1 class="card-title" style="font-size: 40px">
+							<b>¡ Lo Sentimos !</b>
+						</h1>
+						<h2 class="card-title" style="font-size: 30px; margin-bottom: 0px">No
+							se encontraron resultados</h2>
+						<p style="font-size: 15px" class="card-text">Prueba con otras
+							palabras clave o con los filtros de búsqueda</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/../js/funciones.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+	<script src="../data/datatables.min.js"></script>
+	<script src="../js/tabla.js"></script>
+	<script src="../js/ConfirmDelete.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+</body>
+</html>

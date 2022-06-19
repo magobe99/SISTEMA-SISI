@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventarios | SISI</title>
+<link rel="icon" href="../img/ISOTIPO.png">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../css/admin1estilos.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br>
+				<br>
+				<br>
+				<div class="container-fluid ">
+					<div class="row">
+						<div class="col-md-12 mt-5 dash">
+							<div class="title">
+								<h2 style="font-size: 42px;">INVENTARIOS</h2>
+							</div>
+							<br>
+						</div>
+						<div
+							class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+							<a class="option_prov" th:href="@{/categorias}"><i
+								class="fas fa-tags"></i> CATEGORÍAS</a>
+						</div>
+						<div
+							class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+							<a class="option_prov" th:href="@{/inventarios}"><i
+								class="fas fa-boxes"></i> INVENTARIOS</a>
+						</div>
+
+					</div>
+				</div>
+				<!-- HASTA ACA OPCIONES-->
+				<!-- DESDE ACA EL FORMULARIO -->
+				<br>
+				<br>
+				<div class="row mt-2">
+					<div class="col-lg-12 mb-4">
+						<div class="card shadow-lg p-0 mb-5 bg-blue">
+							<div class="card-body">
+								<form action="" method="" id="formulario1"
+									class="needs-validation form-sigin " novalidate
+									onsubmit="return ValidarCate()">
+									<div class="form-row d-flex justify-content-center">
+										<div class="col-md-6 mb-3 ">
+											<p class="mb-5 mt-3 text-center" for="datoC"
+												style="font-size: 20px; color: saddlebrown;">
+												<b>SELECCIONE EL TIPO DE INVENTARIO</b>
+											</p>
+											<select name="tipo" id="tipoProd" class="form-select">
+												<option selected disabled value="">Seleccione una
+													opción</option>
+												<option value="1">Materia Prima (MP)</option>
+												<option value="2">Producto Procesado (PP)</option>
+											</select><br>
+											<div class="invalid-feedback">campo requerido</div>
+										</div>
+									</div>
+									<div class="text-center">
+										<button class="btn "
+											style="color: white; background-color: rgba(500, 149, 28, 0.733);"
+											type="submit">Aceptar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="end_nav2"></div>
+			</div>
+		</div>
+	</div>
+	<script src="../js/jquery-3.5.1.slim.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="/../js/funciones.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		function ValidarCate() {
+			var tipo = document.getElementById("tipoProd");
+			var link = /*[[@{/productos}]]*/'';
+			var link2 = /*[[@{/productosPRO}]]*/'';
+			if (tipo.value == 0 || tipo.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione el tipo de producto',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (tipo.value == 1) {
+				window.location.href = link;
+				return false;
+			} else {
+				window.location.href = link2;
+				return false;
+			}
+		}
+	</script>
+
+</body>
+
+</html>

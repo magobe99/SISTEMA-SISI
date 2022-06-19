@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Formulario Cliente | SISI</title>
+<link rel="icon" href="/../img/ISOTIPO.png" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="/../css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/../css/admin1estilos.css" />
+</head>
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8 col-md-8">
+				<br />
+				<br />
+				<br />
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12 mt-5 dash">
+							<div class="title">
+								<h2 th:if="${cliente.id == null}" style="font-size: 42px">NUEVO
+									CLIENTE</h2>
+								<h2 th:unless="${cliente.id == null}" style="font-size: 42px">ACTUALIZAR
+									CLIENTE</h2>
+							</div>
+							<p class="d-flex justify-content-center">
+								<a href="#ident" class="btn mb-2"
+									style="border-radius: 50px; background-color: #ffdf7b"
+									data-toggle="collapse"><i class="fas fa-question-circle"
+									style="color: black"></i><b style="color: black"> Info</b></a>
+							</p>
+							<div id="ident" class="collapse">
+								<p class="alert text-censtart-3 mt-5"
+									style="color: black; background-color: #ffdf7b; opacity: 90%;">
+									En el módulo CLIENTE podrá registrar en el sistema los datos de
+									sus clientes más frecuentes para realizar ventas, además podra
+									realizar búsquedas de clientes, actualizar datos de sus
+									clientes o eliminarlos si así lo desea.</p>
+							</div>
+						</div>
+						<!-- HASTA ACA ENCABEZADO -->
+						<!-- DESDE ACA LAS OPCIONES -->
+						<div
+							class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+							<a class="option_prov" th:href="@{/clientes/nuevo}"><i
+								class="fas fa-user"></i> NUEVO CLIENTE</a>
+						</div>
+						<div
+							class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+							<a class="option_prov" th:href="@{/clientes}"><i
+								class="fa fa-list"></i> LISTA DE CLIENTES</a>
+						</div>
+					</div>
+					<!-- HASTA ACA OPCIONES-->
+					<!-- DESDE ACA EL FORMULARIO -->
+					<div class="row">
+						<div class="col-lg-12 mt-5">
+							<div class="card shadow-lg p-0 mb-5 bg-white">
+								<div class="card-header bg-primary text-center"
+									style="font-size: 25px">
+									<i class="far fa-id-card mt-2"></i> Información personal
+								</div>
+								<div class="card-body">
+									<form th:action="@{/clientes/guardar}" th:object="${cliente}"
+										method="post" id="formulario1"
+										class="needs-validation form-sigin" novalidate
+										onsubmit="return ValidarFormu()">
+										<input type="text" th:field="*{id}" hidden="true" />
+										<div class="form-frow row mt-2">
+											<div class="col-md-6 mb-3 mt-2">
+												<label for="validationCustom04" class="form-label">Número
+													del documento:</label> <input th:field="*{DocCliente}" type="text"
+													class="form-control" name="nudoc" id="docCli" value=""
+													required placeholder="0000000001" />
+												<div class="valid-feedback">Ingreso de datos correcto</div>
+												<div class="invalid-feedback">campo requerido</div>
+											</div>
+											<div class="col-md-6 mb-3 mt-2">
+												<label for="validationCustom04" class="form-label">Tipo
+													de documento:</label> <select th:field="*{TipoDoc}"
+													class="form-select" name="tipo" id="tipo3" required>
+													<option value="" selected disabled>Seleccione una
+														opción</option>
+													<option value="Cédula de ciudadania">Cédula de
+														ciudadania</option>
+													<option value="Cédula de extranjería">Cédula de
+														extranjería</option>
+													<option value="DNI">DNI</option>
+													<option value="RUT">RUT</option>
+													<option value="NIT">NIT</option>
+												</select>
+												<div class="invalid-feedback">campo requerido</div>
+											</div>
+										</div>
+										<div class="form-frow row">
+											<div class="col-md-6 mb-3 mt-2">
+												<label for="validationCustom04" class="form-label">Nombres:
+												</label> <input th:field="*{nombres}" value="" type="text"
+													class="form-control" name="name" id="nameClient" required
+													placeholder="Ej: David" />
+												<div class="valid-feedback">Ingreso de datos correcto</div>
+												<div class="invalid-feedback">campo requerido</div>
+											</div>
+											<div class="col-md-6 mb-3 mt-2">
+												<label for="validationCustom04" class="form-label">Apellidos:</label>
+												<input th:field="*{apellidos}" value="" type="text"
+													class="form-control" name="last" id="secondname" required
+													placeholder="Ej: Hernandez" />
+												<div class="valid-feedback">Ingreso de datos correcto</div>
+												<div class="invalid-feedback">campo requerido</div>
+											</div>
+										</div>
+										<div class="card-header bg-primary text-center mt-4 mb-5"
+											style="font-size: 25px">
+											<i class="fas fa-phone-alt"></i> Información de contacto
+										</div>
+										<div class="form-frow row">
+											<div class="col-md-6 mb-5">
+												<label for="validationCustom04" class="form-label">Teléfono:</label>
+												<input th:field="*{telefono}" type="number" value=""
+													class="form-control" name="number" id="numberTel"
+													placeholder="teléfono" required />
+												<div class="valid-feedback">Ingreso de datos correcto</div>
+												<div class="invalid-feedback">campo requerido</div>
+											</div>
+											<div class="col-md-6 mb-5">
+												<label for="validationCustom04" class="form-label">
+													Correo: </label>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroupPrepend">@</span>
+													</div>
+													<input th:field="*{correo}" value="" type="email"
+														class="form-control" name="email" id="emailClient"
+														placeholder="correo" required />
+													<div class="valid-feedback">Ingreso de datos correcto
+													</div>
+													<div class="invalid-feedback">Correo no valido</div>
+												</div>
+											</div>
+										</div>
+										<div class="row mb-2 mt-3">
+											<div class="col-6 d-flex justify-content-end">
+												<button class="btn btn-primary" type="reset">
+													Limpiar</button>
+											</div>
+											<div class="col-6">
+												<button class="btn btn-primary" name="btnGrabar"
+													type="submit">Guardar</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="end_nav2"></div>
+			</div>
+		</div>
+	</div>
+	<script src="../js/jquery-3.5.1.slim.min.js"></script>
+	<script src="../js/funciones.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/validación.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+	<script src="../js/ConfirmDelete.js"></script>
+	<script type="text/javascript">
+		function ValidarFormu() {
+			var tipo3 = document.getElementById("tipo3");
+			var nudoc = document.getElementById("docCli").value;
+			var name = document.getElementById("nameClient").value;
+			var last = document.getElementById("secondname").value;
+			var number = document.getElementById("numberTel").value;
+			var cor = document.getElementById("emailClient").value;
+
+			expresion = /\w+@\w+\.+[a-z]/;
+
+			if (!nudoc || nudoc == "") {
+				Swal.fire({
+					icon : "error",
+					title : "Datos Incompletos",
+					text : "El número de documento es requerido",
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!name || name == "") {
+				Swal.fire({
+					icon : "error",
+					title : "Datos Incompletos",
+					text : "Los nombres del cliente son requeridos",
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!last || last == "") {
+				Swal.fire({
+					icon : "error",
+					title : "Datos Incompletos",
+					text : "Los apellidos del cliente son requeridos",
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!number || number == "") {
+				Swal.fire({
+					icon : "error",
+					title : "Datos Incompletos",
+					text : "El número de contacto es requerido",
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (cor.length > 50) {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo es muy extenso!',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			} else if (!cor || cor == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo es requerido',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			} else if (!expresion.test(cor)) {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo no es valido',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (tipo3.value == 0 || tipo3.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione un tipo de documento',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+		}
+	</script>
+</body>
+</html>

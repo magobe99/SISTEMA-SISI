@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalle Producto Procesado | SISI</title>
+<link rel="icon" href="/../../img/ISOTIPO.png">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../css/admin1estilos.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side" th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br>
+				<br>
+				<br>
+				<div class="card bg-light mt-1">
+					<div
+						class="card-header bg-dark text-while text-center text-uppercase"
+						style="color: white; font-size: 25px" th:text="${titulo}"></div>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-md-7">
+								<ul class="list-group d-flex " style="font-size: 14px">
+
+
+									<li class="list-group-item "><strong
+										th:text="'CÓDIGO DEL PRODUCTO:  '"></strong>
+									<p th:text="${producto.codProduct}"></p></li>
+									<li class="list-group-item "><strong
+										th:text="'NOMBRE DEL PRODUCTO:  '"></strong>
+									<p th:text="${producto.nom_Product}"></p></li>
+									<li class="list-group-item "><strong
+										th:text="'COSTO DE PRODUCCIÓN:  '"></strong>
+									<p th:text="${producto.costoProduccion}"></p></li>
+									<li class="list-group-item "><strong
+										th:text="'VALOR UNITARIO VENTA:  '"></strong>
+									<p th:text="${producto.valorUnitarioVenta}"></p></li>
+									<li class="list-group-item "><strong
+										th:text="'PRESENTACIÓN DEL PRODUCTO:  '"></strong>
+									<p th:text="${producto.presentacion_Producto}"></p></li>
+									<li class="list-group-item "><strong
+										th:text="'CONTENIDO DEL PRODUCTO:  '"></strong>
+									<p
+											th:text="${producto.contenido_Product} + ' ' + ${producto.unidad_Medida}"></p></li>
+									<li class="list-group-item "><strong
+										th:text="'CATEGORIA:  '"></strong>
+									<p th:text="${producto.id_ProductePRO.nombreCategoria}"></p></li>
+
+								</ul>
+							</div>
+							<div class="col-md-5 ">
+
+								<img class="img-thumbnail rounded float-left"
+									
+									th:src="@{'/recursos/' + ${producto.imagen}}"
+									th:alt="${producto.imagen}" style="max-width: 100%;"/>
+
+								<ul class="list-group d-flex " style="font-size: 14px">
+
+									
+
+									<li class="list-group-item list-group-item-success"><strong
+										th:text="'STOCK ACTUAL:  '"></strong>
+									<p th:text="${producto.stock_Actual}"></p></li>
+									<li class="list-group-item list-group-item-secondary"><strong
+										th:text="'STOCK MÍNIMO:  '"></strong>
+									<p th:text="${producto.stock_Minimo}"></p></li>
+
+								</ul>
+								<div class="mt-2 d-flex justify-content-center">
+
+									<a th:href="@{/productosPRO/}" type="button"
+										class="btn btn-info">Volver</a> 
+								
+										<a th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')') || #authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" type="button"
+										class="btn btn-outline-success"
+										th:href="@{'/productosPRO/editar'+'/'+ ${producto.IdProduct}}">Editar</a>
+										<div th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')') || #authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}">
+											<a type="button" class="btn btn-outline-danger"
+										th:if="${producto.stock_Actual == 0 || producto.stock_Actual == null}"
+										th:href="@{'/productosPRO/eliminar'+'/'+ ${producto.IdProduct}}"
+										onclick="return confirm('¿Está seguro de eliminar?');">Eliminar</a>
+										</div>
+									
+									
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<div class="end_nav3"></div>
+				
+			</div>
+		</div>
+		</div>
+		<script src="../../js/jquery-3.5.1.slim.min.js"></script>
+		<script src="../../js/popper.min.js"></script>
+		<script src="../../js/bootstrap.min.js"></script>
+		 <script src="/../../js/funciones.js"></script>
+		<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compras | SISI</title>
+<link rel="icon" href="../img/ISOTIPO.png">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../css/admin1estilos.css">
+<link rel="stylesheet" href="../data/datatables.min.css">
+<link rel="stylesheet"
+	href="../data/DataTables-1.11.2/css/dataTables.bootstrap.min.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side" th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br> <br> <br>
+				<div class="container ">
+					<div class="col-md-12 mt-3 ">
+						<div class="card shadow-lg p-4 mb-5 bg-white">
+							<main layout:fragment="contenido">
+								<div class="col-12">
+									<div
+										th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+										th:if="${mensaje != null}" th:text="${mensaje}" class="alert">
+									</div>
+									<div class="d-flex justify-content-between align-items-start">					
+										<div class="row title">
+										<div class="col-lg-9 ">
+											<h2 style="font-size: 50px">COMPRAS REALIZADAS</h2>
+											<h5
+												style="font-size: 32px; color: rgba(230, 149, 28, 0.733);">
+												MATERIA PRIMA</h5>
+										</div>
+										<div class="col-lg-3 ">
+											
+											<a class="btn btn-success mb-2" th:href="@{/comprar/}"><i class="fa-solid fa-money-bill-1-wave"></i>  Nueva
+												Compra</a> <a class="btn btn-primary mb-2"
+												th:href="@{/productos/}"><i class="fa-solid fa-boxes-stacked"></i> Materia Prima</a>
+										</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 mt-4">
+										<!-- Modal -->
+<div class="modal fade" id="exampleModal22" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <div class="modal-title ">
+      	 <h3  id="exampleModalLabel"><b>REPORTE DE COMPRAS DE PRODUCTOS</b></h3>
+      </div>       
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+												<form action="" method="post"
+													class="form-group">
+													<div class="input-group mb-1 d-flex justify-content-around">
+														<label for="fecha1">Fecha de inicio</label> 
+														<label for="fecha2">Fecha final</label>
+													</div>
+													<div class="input-group mb-3 mt-2 d-flex justify-content-around">
+														<input class="form-control" type="Date"
+															placeholder="Fecha de inicio" name="fecha1" id="fecha1">
+														<input class="form-control" type="Date" name="fecha2"
+															id="fecha2">
+													</div>
+													<label for="fecha2">Formato</label>
+													<select id="tip0" class="form-control">
+														<option name="tip0" value="PDF" selected>PDF</option>
+														<option name="tip0" value="EXCEL">EXCEL</option>
+													</select><br>
+												
+													<button class="btn btn-warning" type="button"
+														onclick="reporteCompras()">Descargar</button>
+												</form>	
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-start">
+	<button style="color: white; " th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}" type="button" class="btn btn-danger"
+											data-bs-toggle="modal" data-bs-target="#exampleModal22">
+											<i class="fa-solid fa-file-contract"></i> Reporte General</button>
+											
+											<button style="color: white" th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}" type="button" class="btn btn-danger"
+											data-bs-toggle="modal" data-bs-target="#exampleModal22">
+											<i class="fa-solid fa-file-contract"></i> Reporte General</button>									
+</div>
+											<!-- HASTA ACA OPCIONES-->
+											<!-- DESDE ACA EL FORMULARIO -->
+											<div
+												th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+												th:if="${mensaje != null}" th:text="${mensaje}"
+												class="alert text-center"></div>
+											<div class="table-responsive-xl mt-4"
+												style="font-size: 13px;">
+												<table id="example"
+													class="table table-light table-bordered  table-striped mt-5"
+													style="border-collapse: 50px;">
+													<thead class="table-dark text-center">
+														<tr>
+															<th scope="col">Id</th>
+															<th scope="col">Fecha</th>
+															<th scope="col">Proveedor</th>
+															<th scope="col">Usuario</th>
+															<th scope="col">Total</th>
+															<th scope="col">Opciones</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr class="text-center" th:each="compra : ${compras}">
+															<td class="text-center" th:text="${compra.id}"></td>
+															<td class="text-center" th:text="${compra.fechaYHora}"></td>
+															<td class="text-center" th:text="${compra.proveedor}"></td>
+															<td class="text-center" th:text="${compra.usuario}"></td>
+															<td class="text-center" th:text="${compra.total}"></td>
+															<td class="text-center"><a
+																th:href="@{'/compras/detalle'+'/'+ ${compra.id}}"
+																title="Ver detalles"><i
+																	class="fas fa-file-invoice-dollar" style="color: #9178FF; font-size: 22px"></i></a>
+																	 || 
+																	<a
+																th:href="@{'/report/compras/DetalleCompra?tipo=PDF&codigo'+'='+ ${compra.id}}"
+																title="Descargar PDF"><i class="fa-regular fa-file-pdf" style="color: red; font-size: 22px"></i>
+																</a>
+																		 || 
+																	<a
+																th:href="@{'/report/compras/DetalleCompra?tipo=EXCEL&codigo'+'='+ ${compra.id}}"
+																title="Descargar EXCEL"><i
+																	class="fa-regular fa-file-excel" style="color: green; font-size: 22px"></i></a>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<br> <br> <br> <br>
+										</div>
+									</div>
+								</div>
+							</main>
+						</div>
+					</div>
+				</div>
+				<br> <br> <br>
+			</div>
+			</div>
+			</div>
+			<script src="../js/jquery-3.5.1.slim.min.js"></script>
+			<script src="../js/funciones.js"></script>
+			<script src="../js/bootstrap.min.js"></script>
+			<script src="../data/datatables.min.js"></script>
+			<script src="../js/tabla.js"></script>
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+				integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+				crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+			<script
+				src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+
+</body>
+
+</html>

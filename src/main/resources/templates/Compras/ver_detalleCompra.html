@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalle de Compra | SISI</title>
+<link rel="icon" href="../img/ISOTIPO.png/">
+<link rel="stylesheet" href="/../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="/../css/admin1estilos.css">
+<link rel="stylesheet" href="/../data/datatables.min.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br> <br> <br>
+				<div class="container ">
+					<div class="col-md-12 mt-3 ">
+						<div class="card shadow-lg p-4 mb-5 bg-white">
+							<main layout:fragment="contenido">
+								<div class="col-12">
+									<div
+										th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+										th:if="${mensaje != null}" th:text="${mensaje}" class="alert">
+									</div>
+									<div class="d-flex justify-content-between align-items-start">
+										<div class="row title">
+											<div class="col-lg-9 col-md-12">
+												<h2 style="font-size: 50px">COMPRAS REALIZADAS</h2>
+												<h5
+													style="font-size: 32px; color: rgba(230, 149, 28, 0.733);">
+													MATERIA PRIMA</h5>
+											</div>
+											<div class="col-lg-3 col-md-12">
+												<a class="btn btn-success mb-2" th:href="@{/comprar/}"><i
+													class="fa-solid fa-money-bill-1-wave"></i> Nueva Compra</a> <a
+													class="btn btn-secondary mb-2" th:href="@{/compras/}"><i
+													class="fa fa-list"></i> Lista Compras</a> <a
+													class="btn btn-primary mb-2" th:href="@{/productos/}"><i
+													class="fa-solid fa-boxes-stacked"></i> Materia Prima</a>
+											</div>
+										</div>
+									</div>
+									<div class="table-responsive-xl mt-4">
+										<table id="example" class="table table-bordered mt-4">
+											<thead class="table-dark">
+												<tr>
+													<th>Datos</th>
+
+													<th>Productos</th>
+													<th>Total</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="compra : ${compras}">
+													<td>
+
+														<ul class="list-group list-group-flush">
+															<li class="list-group-item"><strong
+																th:text="'Id Venta    :  '"></strong>
+																<p th:text="${compra.id}"></p></li>
+															<li class="list-group-item"><strong
+																th:text="'Fecha    :  '"></strong>
+																<p th:text="${compra.fechaYHora}"></p></li>
+															<li class="list-group-item"><strong
+																th:text="'Proveedor :'"></strong>
+																<p th:text="${compra.proveedor}"></p></li>
+															<li class="list-group-item"><strong
+																th:text="'Usuario  :  '"></strong>
+																<p th:text="${compra.usuario}"></p></li>
+														</ul>
+													</td>
+													<td>
+														<table class="table table-bordered">
+															<thead>
+																<tr>
+																	<th>Nombre</th>
+																	<th>Código de barras</th>
+																	<th>Cantidad vendida</th>
+																	<th>Precio</th>
+																	<th>Total</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr th:each="producto : ${compra.Cod_Compra}">
+																	<td th:text="${producto.nombre}"></td>
+																	<td th:text="${producto.cod}"></td>
+																	<td th:text="${producto.cantidad}"></td>
+																	<td th:text="${producto.precio}"></td>
+																	<td th:text="${producto.total}"></td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+													<td th:text="${compra.total}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</main>
+						</div>
+					</div>
+				</div>
+				<br> <br> <br>
+				<div class="end_nav3"></div>
+			</div>
+		</div>
+	</div>
+	<script src="../js/jquery-3.5.1.slim.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/funciones.js"></script>
+	<script src="../data/datatables.min.js"></script>
+	<script src="../js/tabla.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+
+</body>
+</html>

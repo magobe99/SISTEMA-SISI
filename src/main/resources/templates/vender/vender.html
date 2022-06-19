@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nueva Venta | SISI</title>
+<link rel="icon" href="/../img/ISOTIPO.png">
+<link rel="stylesheet" href="/../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="/../css/admin1estilos.css">
+<link rel="stylesheet" href="../data/datatables.min.css">
+<link rel="stylesheet"
+	href="/../data/DataTables-1.11.2/css/dataTables.bootstrap.min.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2 ">
+		<div class="row ">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br> <br> <br>
+				<div class="container-fluid ">
+					<div class="col-md-12 mt-3 dash">
+						<div class="title">
+							<h2 style="font-size: 50px">NUEVA VENTA</h2>
+							<h5 style="font-size: 32px; color: rgba(230, 149, 28, 0.733);">
+								PRODUCTOS PROCESADOS</h5>
+							<div class="row">
+								<div
+									class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+									<a class="option_prov" th:href="@{/vender/}"><i
+										class="fas fa-tags"></i> NUEVA VENTA</a>
+								</div>
+								<div
+									class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+									<a class="option_prov" th:href="@{/ventas/}"><i
+										class="fa fa-list"></i> VENTAS REALIZADAS</a>
+								</div>
+							</div>
+						</div>
+						<div class="text-center" style="font-size: 17px;">
+							<b>
+								<div
+									th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+									th:if="${mensaje != null}" th:text="${mensaje}"
+									class="alert text-center"></div>
+							</b>
+						</div>
+						<div class="shadow-lg mt-4  "
+							style="background-color: rgb(204, 213, 220, 0)">
+							<main layout:fragment="contenido">
+								<div class="row d-flex">
+									<div class="col-lg-4 pb-3 m-0"
+										style="background-color: #CCD5DC">
+										<div class="p-3 flex-shrink-1"
+											style="background-color: #7BD2D5">
+											<form th:action="@{/vender/agregar}" th:object="${producto}"
+												method="post" novalidate>
+												<div class="row form-group">
+													<div class="col-lg-12 col-md-6 col-sm-6">
+														<label for="codigo" style="color: #232323"><b>Código
+																de barras :</b></label>
+														<div class="input-group mb-1">
+															<input th:field="*{codProduct}" class="form-control"
+																type="text" list="browsers" name="myBrowser" />
+															<datalist id="browsers">
+																<th:block th:each="producto : ${listarProductosPRO}">
+																	<option
+																		th:text="${producto.nom_Product} + ' ' + ${producto.contenido_Product} + ' ' + ${producto.unidad_Medida}"
+																		th:value="${producto.codProduct}"></option>
+																</th:block>
+															</datalist>
+														</div>
+													</div>
+													<div class="col-lg-12 col-md-6 col-sm-6">
+														<label for="codigo" style="color: #232323"><b>Cantidad
+																:</b></label> <input type="number" class="form-control" value="1"
+															name="cantidad" id="cantidad" placeholder="1" min="0" />
+
+														<div class="d-flex flex-row-reverse bd-highlight ">
+															<button type="submit" class="btn btn-primary mt-1 ">
+																Agregar&nbsp;<i class="fa fa-check"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+											</form>
+
+											<form class="mb-2 justify-content-flex-end needs-validation"
+												th:object="${venta}" th:action="@{/vender/terminar}"
+												method="post" novalidate>
+												<div class="row form-group">
+													<div class="col-lg-12 col-md-6 col-sm-6">
+														<label for="codigo" style="color: #232323"><b>Cliente
+																:</b></label>
+														<div class="input-group mb-1">
+															<input th:field="*{cliente}" class="form-control"
+																type="text" list="cli" name="cli" required />
+
+															<datalist id="cli">
+																<th:block th:each="cliente: ${listaClientes}">
+																	<option
+																		th:text="${cliente.DocCliente} + ' - ' + ${cliente.nombres} + ' ' + ${cliente.apellidos}"
+																		th:value="${cliente.id}"></option>
+																</th:block>
+															</datalist>
+															<div class="input-group-prepend">
+																<span class="input-group-text" id="inputGroupPrepend">
+																	<a th:href="@{/clientes/nuevo}" title="Nuevo Cliente">
+																		<i class="fas fa-tags" style="color: #6AA545;"></i>
+																</a>
+																</span>
+															</div>
+															<div class="invalid-feedback">Campo requerido</div>
+														</div>
+													</div>
+													<div class="col-lg-12 col-md-6 col-sm-6">
+														<label for="codigo" style="color: #232323"><b>Vendedor
+																:</b></label> <input th:field="*{usuarioVenta}" class="form-control"
+															type="text" list="usu" name="usu" required />
+														<datalist id="usu">
+															<th:block th:each="usuario: ${listaUsuarios}">
+
+																<option
+																	th:text="${usuario.codUsuario} + ' - ' + ${usuario.nombre} + ' ' + ${usuario.apellido}"
+																	th:value="${usuario.id}"></option>
+															</th:block>
+														</datalist>
+														<div class="invalid-feedback">Campo requerido</div>
+													</div>
+												</div>
+												<div
+													class="d-flex  justify-content-center bd-highlight mt-2">
+													<div class="p-2 bd-highlight">
+														<a th:href="@{/vender/limpiar}" class="btn btn-danger">Cancelar&nbsp;
+														</a>
+													</div>
+													<div class="p-2 bd-highlight">
+														<button type="submit" class="btn btn-success">Terminar&nbsp;</button>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="col-lg-8 bd-highlight"
+										style="background-color: white">
+										<div class="p-2 w-100 bd-highlight"
+											style="background-color: white">
+											<h1 style="font-size: 35px; text-align: left"
+												th:text="${'Total: ' + total}"></h1>
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<thead>
+														<tr class="text-center">
+															<th>Nombre</th>
+															<th>Código</th>
+															<th>Precio</th>
+															<th>Cantidad</th>
+															<th>Total</th>
+															<th>Quitar</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="producto, iterador : ${session.carrito}">
+															<td th:text="${producto.nom_Product}"></td>
+															<td th:text="${producto.codProduct}"></td>
+															<td th:text="${producto.valorUnitarioVenta}"></td>
+															<td th:text="${producto.cantidad}"></td>
+															<td th:text="${producto.total}"></td>
+															<td class="text-center">
+																<form th:action="@{/vender/quitar/} + ${iterador.index}"
+																	method="post">
+																	<button type="submit" class="btn btn-danger">
+																		<i class="fa fa-trash"></i>
+																	</button>
+																</form>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</main>
+						</div>
+					</div>
+				</div>
+				<div class="end_nav3"></div>
+			</div>
+		</div>
+		<br>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="../js/validación.js"></script>
+	<script src="/../js/funciones.js"></script>
+</body>
+</html>

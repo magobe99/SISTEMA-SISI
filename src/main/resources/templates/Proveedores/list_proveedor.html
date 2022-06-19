@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Proveedores | SISI</title>
+<link rel="icon" href="../img/ISOTIPO.png">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../css/admin1estilos.css">
+<link rel="stylesheet" href="../css/main.css" />
+<link rel="stylesheet" href="../data/datatables.min.css">
+<link rel="stylesheet"
+	href="../data/DataTables-1.11.2/css/dataTables.bootstrap.min.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2 ">
+		<div class="row ">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8   ">
+				<br> <br> <br>
+				<div class="container-fluid ">
+					<div class="row">
+						<div class="col-md-12 mt-5 dash">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="title">
+										<h2 style="font-size: 42px;">LISTA DE PROVEEDORES</h2>
+									</div>
+									<p class="d-flex justify-content-center">
+										<a href="#ident" class="btn  mb-2"
+											style="border-radius: 50px; background-color: #ffdf7b;"
+											data-toggle="collapse"><i class="fas fa-question-circle"
+											style="color: black;"></i><b style="color: black;"> Info</b></a>
+									</p>
+									<div id="ident" class="collapse">
+										<p class="alert  text-censtart-3  mt-5"
+											style="color: black; background-color: #ffdf7b; opacity: 90%;">
+											En el módulo PROVEEDORES usted podrá registra los proveedores
+											de productos a los cuales usted le compra mercancía o materia
+											prima. Además, podrá actualizar los datos de los proveedores,
+											ver todos los proveedores registrados en el sistema, buscar
+											proveedores en el sistema o eliminarlos si así lo desea.</p>
+									</div>
+								</div>
+							</div>
+							<!-- HASTA ACA ENCABEZADO -->
+							<!-- DESDE ACA LAS OPCIONES -->
+							<div class="row" th:fragment="html_option">
+								<div
+									class="text-center option_prov col-lg-6  col-md-6 col-sm-6 mt-3">
+									<a class="option_prov" th:href="@{/proveedores/nuevo}"><i
+										class="fas fa-truck"></i> NUEVO PROVEEDOR</a>
+								</div>
+								<div
+									class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+									<a class="option_prov" th:href="@{/proveedores}"><i
+										class="fa fa-list"></i> LISTA DE PROVEEDORES</a>
+								</div>
+							</div>
+							<!-- HASTA ACA OPCIONES-->
+							<!-- DESDE ACA EL FORMULARIO -->
+							<div class="row ">
+								<div class="col-lg-12 mt-4">
+									<div class="d-flex justify-content-start">
+										<div style="padding-right: 5px;">
+											<a style="color: white;" class="btn btn-danger"
+												th:href="@{/report/ProveedoresGeneral?tipo=PDF}"
+												type="button" title="Descargar PDF"><i
+												class="fa-regular fa-file-pdf" style="color: white;"> </i>
+												PDF </a>
+										</div>
+										<div style="padding-right: 5px;">
+											<a style="color: green" class="btn btn-light"
+												th:href="@{/report/ProveedoresGeneral?tipo=EXCEL}"
+												type="button" title="Descargar EXCEL"><i
+												class="fa-regular fa-file-excel" style="color: green;">
+											</i> EXCEL </a>
+										</div>
+										<button
+											th:if="${#authorization.expression('hasRole(''ROLE_ADMINISTRADOR'')')}"
+											type="button" class="btn btn-info" data-bs-toggle="modal"
+											data-bs-target="#exampleModal">
+											<i class="fa-solid fa-upload"></i> Subir CSV
+										</button>
+
+										<button
+											th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR_LOGISTICO'')')}"
+											type="button" class="btn btn-info" data-bs-toggle="modal"
+											data-bs-target="#exampleModal">
+											<i class="fa-solid fa-upload"></i> Subir CSV
+										</button>
+									</div>
+									<!-- Modal -->
+									<div class="modal fade" id="exampleModal" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h3 class="modal-title text-center" id="exampleModalLabel">IMPORTACIÓN
+														DE DATOS DE PROVEEDORES</h3>
+													<button type="button" class="btn-close"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body text-center">
+													<h4>Cargue el archivo CSV</h4>
+													<form id="singleUploadForm" name="singleUploadForm">
+														<input id="singleFileUploadInput" type="file" name="file"
+															class="file-input" required />
+														<button type="submit" class="primary submit-btn">Subir</button>
+													</form>
+													<div class="upload-response">
+														<div style="color: red;" id="singleFileUploadError"></div>
+														<div style="color: green;" id="singleFileUploadSuccess"></div>
+													</div>
+												</div>
+												<div class="modal-footer d-flex justify-content-center">
+													<a type="button"
+														style="padding-left: 70px; padding-right: 70px;"
+														class="btn btn-dark" th:href="@{/proveedores}">Finalizar</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div
+										th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+										th:if="${mensaje != null}" th:text="${mensaje}"
+										class="alert text-center"></div>
+									<div class="table-responsive-xl mt-4" style="font-size: 12px;">
+										<table id="example"
+											class="table table-light table-bordered  table-striped mt-5"
+											style="border-collapse: 50px;">
+											<thead class="table-dark text-center">
+												<tr>
+													<th scope="col">Tipo</th>
+													<th scope="col">Documento</th>
+													<th scope="col">Empresa</th>
+													<th scope="col">Representante</th>
+													<th scope="col">Correo</th>
+													<th scope="col">Teléfono</th>
+													<th scope="col">Dirección</th>
+													<th scope="col">Opciones</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="text-center"
+													th:each="proveedor : ${listarProveedores}">
+													<td th:text="${proveedor.tipo_documento}"></td>
+													<td th:text="${proveedor.doc_Proveedor}"></td>
+													<td th:text="${proveedor.nomEmpresa}"></td>
+													<td
+														th:text="${proveedor.nomRepresentante} + ' ' + ${proveedor.apellidoRepresentante}"></td>
+													<td th:text="${proveedor.correo}"></td>
+													<td th:text="${proveedor.telefono}"></td>
+													<td th:text="${proveedor.direccion}"></td>
+													<td class="text-center"><a
+														th:href="@{'/proveedores/editar'+'/'+ ${proveedor.id}}"
+														title="actualizar"><i class="fas fa-undo-alt"
+															style="color: green;"></i></a> | <a
+														th:href="@{'/proveedores/eliminar'+'/'+ ${proveedor.id}}"
+														onclick="return confirm('¿Está seguro de eliminar?');"
+														title="Eliminar"><i class="fas fa-trash-alt"
+															style="color: red;"></i></a></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<br> <br> <br>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="end_nav3"></div>
+			</div>
+		</div>
+	</div>
+	<script src="../js/jquery-3.5.1.slim.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/main.js"></script>
+	<script src="../data/datatables.min.js"></script>
+	<script src="../js/tabla.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+	<!-- botones -->
+	<script src="../data/Buttons-2.0.0/js/buttons.bootstrap4.min.js"></script>
+	<script src="../data/JSZip-2.5.0/jszip.min.js"></script>
+	<script src="../data/pdfmake-0.1.36/pdfmake.min.js"></script>
+	<script src="../data/pdfmake-0.1.36/vfs_fonts.js"></script>
+	<script src="../data/Buttons-2.0.0/js/buttons.html5.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+:root{
+    --dark: #16191c;
+    --dark-x: #1e2126;
+    --light: #fff;
+    --boder-color: rgb(251, 133, 0);
+    --box-shadow: rgb(2, 48, 71);
+    --interaction-links: rgb(255, 183, 3);
+}
+
+body{
+    font-family: 'Roboto Slab', serif;
+    font-weight: 300;
+    color: var(--dark);
+
+}
+
+.bg-dark{
+    background-color: var(--light) !important;
+}
+
+.bg-dark-x{
+    background-color: var(--dark-x);
+}
+
+.sisi{
+    width: 250px;
+}
+
+input{
+    color: var(--boder-color) !important;
+}
+
+i{
+    color: var(--box-shadow);
+}
+
+input:hover{
+    background: var(--dark-x) !important;
+    border-color: var(--boder-color);
+    box-shadow: 0 1px 1px var(--box-shadow) inset, 0 0 8px var(--boder-color);
+    outline: 0 none;
+}
+
+input:focus{
+    background: var(--dark-x) !important;
+    border-color: var(--boder-color) !important;
+    box-shadow: 0 1px 1px var(--box-shadow) inset, 0 0 8px var(--boder-color) !important;
+    outline: 0 none !important;
+}
+
+span{
+    height: 50px;
+}
+
+.login:hover{
+    border-color: var(--boder-color);
+    box-shadow: 0 1px 1px var(--box-shadow) inset, 0 0 8px var(--boder-color);
+    outline: 0 none;
+}
+
+.login:focus{
+    background: var(--dark-x) !important;
+    border-color: var(--boder-color) !important;
+    box-shadow: 0 1px 1px var(--box-shadow) inset, 0 0 8px var(--boder-color) !important;
+    outline: 0 none;
+}
+
+.form-control, .btn{
+    min-height: 3.125rem;
+    line-height: initial;
+}
+
+.btn{
+    border-radius: 15px;
+    border: none;
+    background: var(--boder-color);
+}
+
+.btn:hover{
+    border-radius: 20px;
+    background: var(--boder-color);
+    transition: all ease 700ms;
+}
+
+a{
+    color: var(--interaction-links);
+    font-size: 15px;
+    font-weight: 750;
+}
+
+a:hover{
+    color: var(--interaction-links) !important;
+    transition: all ease 400ms;
+}
+
+.img-1{
+    background-image: url(https://pbs.twimg.com/media/FVj2XymWUAIC15W?format=jpg&name=4096x4096);
+    background-size: cover;
+    background-position: center;
+}
+
+.img-2{
+    background-image: url(https://pbs.twimg.com/media/FVj2XynWYAEAfO9?format=jpg&name=4096x4096);
+    background-size: cover;
+    background-position: center;
+}
+
+.img-3{
+    background-image: url(https://pbs.twimg.com/media/FVj2XynX0AERXWf?format=jpg&name=4096x4096);
+    background-size: cover;
+    background-position: center;
+}
+
+.img-4{
+    background-image: url(https://pbs.twimg.com/media/FVj2XymWQAAKz68?format=jpg&name=4096x4096);
+    background-size: cover;
+    background-position: center;
+}
+
+.img-5{
+    background-image: url(https://pbs.twimg.com/media/FVj2driWAAETmqm?format=jpg&name=4096x4096);
+    background-size: cover;
+    background-position: center;
+}
+
+.img-6{
+    background-image: url(https://pbs.twimg.com/media/FVj2drnXoAAWDfG?format=jpg&name=4096x4096);
+    background-size: cover;
+    background-position: center;
+}
+
+
+h5{
+    font-family: 'Spartan', sans-serif;
+    color: var(--light);
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.subtitle{
+    font-family: 'Spartan', sans-serif;
+}
+
+.register{
+    color: var(--boder-color);
+}

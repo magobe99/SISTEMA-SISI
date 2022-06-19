@@ -1,0 +1,18 @@
+
+.logosis img{
+	width: 160px;
+	height: 80%;
+	padding: 2px;
+	padding-left: 20px;
+	margin: 0;
+
+	display: block;
+	
+}
+
+.ban{
+	position: relative;
+	top: 46px;
+	margin-bottom: 50px;
+}
+

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proveedor | SISI</title>
+<link rel="icon" href="/../img/ISOTIPO.png">
+<link rel="stylesheet" href="/../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="/../css/admin1estilos.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<!-- DESDE ACA EL ENCABEZADO -->
+			<div class="col-lg-8  col-md-8 ">
+				<br>
+				<br>
+				<br>
+				<div class="container-fluid-xl">
+					<div class="row">
+						<div class="col-md-12 mt-5 dash">
+							<div class="title">
+								<h2 th:if="${proveedor.id == null}" style="font-size: 42px">NUEVO
+									PROVEEDOR</h2>
+								<h2 th:unless="${proveedor.id == null}" style="font-size: 42px">ACTUALIZAR
+									PROVEEDOR</h2>
+							</div>
+							<p class="d-flex justify-content-center">
+								<a href="#ident" class="btn  mb-2"
+									style="border-radius: 50px; background-color: #ffdf7b;"
+									data-toggle="collapse"> <i class="fas fa-question-circle"
+									style="color: black;"></i><b style="color: black;"> Info</b></a>
+							</p>
+							<div id="ident" class="collapse">
+								<p class="alert  text-censtart-3  mt-5"
+									style="color: black; background-color: #ffdf7b; opacity: 90%;">
+									En el módulo PROVEEDORES usted podrá registra los proveedores
+									de productos a los cuales usted le compra mercancía o materia
+									prima. Además, podrá actualizar los datos de los proveedores,
+									ver todos los proveedores registrados en el sistema, buscar
+									proveedores en el sistema o eliminarlos si así lo desea.</p>
+							</div>
+							<!-- HASTA ACA ENCABEZADO -->
+							<!-- DESDE ACA LAS OPCIONES -->
+							<div class="row">
+								<div
+									class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+									<a class="option_prov" th:href="@{/proveedores/nuevo}"><i
+										class="fas fa-truck"></i> NUEVO PROVEEDOR</a>
+								</div>
+								<div
+									class="text-center option_prov col-lg-6 col-md-6 col-sm-6 mt-3">
+									<a class="option_prov" th:href="@{/proveedores}"><i
+										class="fa fa-list"></i> LISTA DE PROVEEDORES</a>
+								</div>
+							</div>
+							<!-- HASTA ACA OPCIONES-->
+							<!-- DESDE ACA EL FORMULARIO -->
+							<div class="row">
+								<div class="col-lg-12 mt-5">
+									<div class="card shadow-lg p-0 mb-5 bg-white">
+										<div class="card-header bg-primary text-center"
+											style="font-size: 25px;">
+											<i class="far fa-id-card mt-2 "></i> Datos del proveedor
+										</div>
+										<div class="card-body">
+											<form th:action="@{/proveedores/guardar}"
+												th:object="${proveedor}" method="post" id="formulario1"
+												class="needs-validation form-sigin" novalidate
+												onsubmit="return ValidarFormu5()">
+												<input type="text" th:field="*{id}" hidden="true" />
+												<div class="form-frow row">
+													<div class="col-md-12 mb-3 mt-2">
+														<label for="validationCustom03" class="form-label">
+															Nombre Empresa:</label> <input th:field="*{nomEmpresa}"
+															type="text" class="form-control" name="empresa"
+															id="empresa" value="" required
+															placeholder="Nombre de la empresa">
+														<div class="valid-feedback">Ingreso de datos
+															correcto</div>
+														<div class="invalid-feedback">campo requerido</div>
+													</div>
+													<div class="col-md-6 mb-3 mt-2">
+														<label for="validationCustom04" class="form-label">Tipo
+															de documento:</label> <select th:field="*{tipo_documento}"
+															class="form-select" name="tipo" id="tipo3" required>
+															<option selected disabled value="">Seleccione
+																una opción</option>
+															<option value="NIT">NIT</option>
+															<option value="RUT">RUT</option>
+															<option value="Cédula">Cédula</option>
+															<option value="Cédula de extranjería">Cédula de
+																extranjería</option>
+															<option value="DNI">DNI</option>
+														</select>
+														<div class="invalid-feedback">campo requerido</div>
+													</div>
+													<div class="col-md-6 mb-3 mt-2">
+														<label for="validationCustom02" class="form-label">
+															Número del documento: </label> <input th:field="*{doc_Proveedor}"
+															type="text" class="form-control" name="nudoc" id="nudoc"
+															value="" required placeholder="0000000001">
+														<div class="valid-feedback">Ingreso de datos
+															correcto</div>
+														<div class="invalid-feedback">campo requerido</div>
+													</div>
+												</div>
+												<div class="form-frow row">
+													<div class="col-md-12 mb-5 mt-2">
+														<label for="validationCustom05" class="form-label">
+															Dirección: </label> <input th:field="*{direccion}" type="text"
+															class="form-control" name="adress" id="adress"
+															placeholder="dirección" value="" required="">
+														<div class="valid-feedback">Ingreso de datos
+															correcto</div>
+														<div class="invalid-feedback">campo requerido</div>
+													</div>
+												</div>
+												<div class="card-header bg-primary text-center "
+													style="font-size: 25px;">
+													<i class="fas fa-handshake"></i> Representante Legal
+												</div>
+												<div class="form-frow row">
+													<div class="col-md-6 mb-5 mt-4">
+														<label for="validationCustom03" class="form-label">
+															Nombres:</label> <input th:field="*{nomRepresentante}"
+															type="text" class="form-control" name="name" id="name"
+															required placeholder="Ej: David">
+														<div class="valid-feedback">Ingreso de datos
+															correcto</div>
+														<div class="invalid-feedback">campo requerido</div>
+													</div>
+													<div class="col-md-6 mb-5 mt-4">
+														<label for="validationCustom04" class="form-label">
+															Apellidos: </label> <input th:field="*{apellidoRepresentante}"
+															type="text" class="form-control" name="last" id="last"
+															value="" required placeholder="Ej: Hernández">
+														<div class="valid-feedback">Ingreso de datos
+															correcto</div>
+														<div class="invalid-feedback">campo requerido</div>
+													</div>
+												</div>
+												<div class="card-header bg-primary text-center "
+													style="font-size: 25px;">
+													<i class="fas fa-phone-alt"></i> Información de contacto
+												</div>
+												<div class="form-frow row">
+													<div class="col-md-6  mt-4 ">
+														<label for="validationCustom07" class="form-label">
+															Teléfono: </label> <input th:field="*{telefono}" type="number"
+															min="0" class="form-control" name="number" id="number"
+															placeholder="teléfono" value="" required>
+														<div class="valid-feedback">Ingreso de datos
+															correcto</div>
+														<div class="invalid-feedback">campo requerido</div>
+													</div>
+													<div class="col-md-6 mb-5 mt-4">
+														<label for="validationCustom08" class="form-label">
+															Correo: </label>
+														<div class="input-group">
+															<div class="input-group-prepend">
+																<span class="input-group-text" id="inputGroupPrepend">@</span>
+															</div>
+															<input th:field="*{correo}" type="email"
+																class="form-control" name="email" id="email2"
+																placeholder="correo" value="" required>
+															<div class="valid-feedback">Ingreso de datos
+																correcto</div>
+															<div class="invalid-feedback">Correo no valido</div>
+														</div>
+													</div>
+													<div class="text-center mb-2 mt-3 ">
+														<button class="btn btn-primary" type="reset">
+															Limpiar</button>
+														<input class="btn btn-primary" type="submit"
+															name="btnGrabar" value="Guardar"> </input>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/../js/jquery-3.5.1.slim.min.js"></script>
+	<script src="/../js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+	<script src="/../js/validación.js"></script>
+	<script type="text/javascript">
+		function ValidarFormu5() {
+			var tipoDoc = document.getElementById("tipo3");
+			var estado = document.getElementById('estado');
+			var nudoc = document.getElementById("nudoc").value;
+			var emp = document.getElementById("empresa").value;
+			var name = document.getElementById("name").value;
+			var last = document.getElementById("last").value;
+			var adress = document.getElementById("adress").value;
+			var number = document.getElementById("number").value;
+			var email2 = document.getElementById("email2").value;
+
+			expresion = /\w+@\w+\.+[a-z]/;
+
+			if (!emp || emp == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!nudoc || nudoc == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!name || name == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!last || last == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!adress || adress == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (tipoDoc.value == 0 || tipoDoc.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione un tipo de documento',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (estado.value == 0 || estado.value == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Campo Requerido',
+					text : 'Seleccione algún estado',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (email2.length > 35) {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo es muy extenso!',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!email2 || email2 == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo es requerido',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!expresion.test(email2)) {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'El correo no es valido',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+			if (!number || number == "") {
+				Swal.fire({
+					icon : 'error',
+					title : 'Datos Incompletos',
+					text : 'Todos los campos son requeridos',
+					showConfirmButton : true,
+					timer : 8000
+				});
+				return false;
+			}
+		}
+	</script>
+</body>
+</html>

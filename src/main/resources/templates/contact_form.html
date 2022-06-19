@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONTACTO CLIENTES</title>
+<link rel="icon" href="../../img/ISOTIPO.png">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../../css/admin1estilos.css">
+</head>
+
+<body id="body">
+	<div class="container" th:replace="index ::html_navbar"></div>
+	<div class="container-fluid-xl dash2">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 menu__side"
+				th:replace="index ::html_menulateral"></div>
+			<div class="col-lg-8  col-md-8   ">
+				<br> <br>
+				<div class="row">
+					<div class="col-lg-12 mt-5">
+						<div
+							th:classappend="'alert-' + (${clase != null} ? ${clase} : info)"
+							th:if="${mensaje != null}" th:text="${mensaje}"
+							class="alert text-center"></div>
+						<div class="card shadow-lg p-0 mb-3 mt-1 bg-white">
+							<div class="card-header bg-dark text-center mb-3"
+								style="font-size: 25px; color: white;">
+								<i class="fa-solid fa-paper-plane"></i> CONTACTO MASIVO -
+								CLIENTES
+							</div>
+							<div class="card-body">
+								<form th:action="@{/contact}" method="post"
+									class="needs-validation"
+									style="max-width: 600px; margin: 0 auto;"
+									enctype="multipart/form-data" novalidate>
+									<div class="form-group row">
+										<input type="text" class="form-control mb-2" name="fullname"
+											placeholder="Nombre Completo" required>
+										<div class="invalid-feedback">campo requerido</div>
+									</div>
+									<div class="form-group row">
+										<input type="email" class="form-control mb-2" name="email"
+											placeholder="Correo de contacto" required>
+										<div class="invalid-feedback">campo requerido</div>
+									</div>
+									<div class="form-group row">
+										<input type="text" class="form-control mb-2" name="subject"
+											placeholder="Asunto" required>
+										<div class="invalid-feedback">campo requerido</div>
+									</div>
+									<div class="form-group row">
+										<textarea rows="5" class="form-control mb-4" name="content"
+											placeholder="Mensaje" required></textarea>
+										<div class="invalid-feedback">campo requerido</div>
+									</div>
+									<div class="form-group row">
+
+										<input type="file" class="form-control" name="attachment" />
+									</div>
+									<div class="text-center mt-4">
+										<button class="btn btn-primary" type="reset">Limpiar</button>
+										<input type="submit" value="Enviar" class="btn btn-primary">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/../js/jquery-3.5.1.slim.min.js"></script>
+	<script src="/../js/bootstrap.min.js"></script>
+	<script src="/../js/validación.js"></script>
+	<script src="/../js/funciones.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+		integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+</body>
+</html>
