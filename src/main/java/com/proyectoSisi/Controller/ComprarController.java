@@ -53,7 +53,7 @@ public class ComprarController {
 			carrito2.remove(indice);
 			this.guardarcarrito2(carrito2, request);
 		}
-		return "redirect:/comprar";
+		return "redirect:/comprar/";
 		
 	}
 	
@@ -67,7 +67,7 @@ public class ComprarController {
 		redirectAttrs
 				.addFlashAttribute("mensaje", "Compra cancelada")
 		        .addFlashAttribute("clase", "danger");
-		return "redirect:/comprar";
+		return "redirect:/comprar/";
 		
 	}
 	
@@ -98,7 +98,7 @@ public class ComprarController {
 		ArrayList<productoParaComprar> carrito2 = this.obtenercarrito2(request);
 		// Si no hay carrito2 o esta vacio, regresamos inmediatamente
 		if (carrito2 == null || carrito2.size() <= 0) {
-			return "redirect:/comprar";
+			return "redirect:/comprar/";
 		}
 		
 		
@@ -124,7 +124,7 @@ public class ComprarController {
 		redirectAttrs
 		        .addFlashAttribute("mensaje", "Compra registrada correctamente")
 		        .addFlashAttribute("clase", "success");
-		return "redirect:/comprar";
+		return "redirect:/comprar/";
 	}
 	
 	
@@ -170,7 +170,7 @@ public class ComprarController {
 			
 		}
 		this.guardarcarrito2(carrito2, request);
-        return "redirect:/comprar";
+        return "redirect:/comprar/";
 	 }
 	
 	
